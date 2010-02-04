@@ -11,8 +11,7 @@ from tiddlyweb.util import std_error_message
 from tiddlywebplugins.instancer.util import spawn
 
 from tiddlywebplugins.tiddlyspace import instance as instance_module
-#from tiddlywebplugins.tiddlyspace.config import config as init_config # XXX: not ready yet
-from tiddlywebwiki.config import config as init_config # XXX: DEBUG (see above)
+from tiddlywebplugins.tiddlyspace.config import config as init_config
 
 
 def main(args):

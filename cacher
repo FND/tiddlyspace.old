@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+"""
+creates local cache of instance tiddlers to be included in distribution
+"""
+
+import sys
+
+import mangler
+
+from tiddlywebplugins.instancer.util import cache_tiddlers
+
+
+PACKAGE_NAME = 'tiddlywebplugins.tiddlyspace'
+
+
+def main(args):
+    cache_tiddlers(PACKAGE_NAME)
+    return True
+
+
+if __name__ == '__main__':
+    status = not main(sys.argv)
+    sys.exit(status)
