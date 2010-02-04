@@ -21,26 +21,26 @@ def create_space(name, members, public_recipe_bags=[]):
   public_recipe_lines = map(lambda bag: (bag, ''), public_recipe_bags)
 
   store_structure['bags'][name+'_public'] = {
-    'desc': 'TiddlyPocketBook',
+    'desc': 'todo',
     'policy': public_policy
   }
 
   store_structure['recipes'][name+'_public'] = {
-    'desc': 'TiddlyPocketBook',
+    'desc': 'todo',
     'policy': public_policy,
     'recipe': public_recipe_lines
   }
 
   store_structure['bags'][name+'_private'] = {
-    'desc': 'TiddlyPocketBook',
+    'desc': 'todo',
     'policy': private_policy
   }
 
   private_recipe_lines = []
   private_recipe_lines.extend(public_recipe_lines)
   private_recipe_lines.extend(['system',name+"_private"])
-  store_structure['recipes']['book_private_recipe'] = {
-    'desc': 'TiddlyPocketBook',
+  store_structure['recipes'][name+'_private_recipe'] = {
+    'desc': 'todo',
     'policy': private_policy,
     'recipe': [
       ('system', ''),

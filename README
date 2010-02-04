@@ -3,3 +3,5 @@ TiddlyWeb-based multi-user TiddlyWiki hosting
 
 website: http://tiddlyspace.com
 repository: http://github.com/FND/tiddlyspace
+
+Run "build.sh" for a complete build from scratch
