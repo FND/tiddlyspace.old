@@ -1,9 +1,9 @@
 # YOU NEED TO EDIT THESE
-AUTHOR = 'Python Person'
-AUTHOR_EMAIL = 'python@example.org'
-NAME = 'tiddlywebplugins.example'
-DESCRIPTION = 'The short description of my project'
-VERSION = '0.9'
+AUTHOR = 'Osmosoft'
+AUTHOR_EMAIL = 'hello@osmosoft.com'
+NAME = 'tiddlywebplugins.tiddlyspace'
+DESCRIPTION = 'TiddlySpace is for Tiddly Spaces'
+VERSION = '0.1'
 
 
 import os
@@ -23,6 +23,11 @@ setup(
     packages = find_packages(exclude='test'),
     author_email = AUTHOR_EMAIL,
     platforms = 'Posix; MacOS X; Windows',
-    install_requires = ['setuptools', 'tiddlyweb'],
-    zip_safe = False
+    install_requires = ['setuptools',
+        'tiddlyweb',
+        'tiddlywebwiki',
+        'tiddlywebplugins.utils',
+        ],
+    zip_safe = False,
+    include_package_data = True,
     )
