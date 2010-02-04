@@ -13,7 +13,7 @@ from tiddlywebplugins.tiddlyspace.instance import store_contents
 PACKAGE_NAME = 'tiddlywebplugins.tiddlyspace'
 
 
-config['instance_tiddlers'] = get_tiddler_locations(store_contents, PACKAGE_NAME),
+config['instance_tiddlers'] = get_tiddler_locations(store_contents, PACKAGE_NAME)
 
 config['space'] = { # XXX: WTF?
     'bags': {
