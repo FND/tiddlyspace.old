@@ -13,4 +13,8 @@ for user in $osmosoft ; do
   twanager userpass $user x
 done
 
-echo "now you can run 'cd instance ; twanager server' and point your browser at http://0.0.0.0:8080"
+echo "*********************************************"
+echo "  Instance Complete"
+echo "*********************************************"
+echo "now you can run 'cd instance ; twanager server' and point your browser at http://0.0.0.0:8080."
+echo "To log in, visit http://0.0.0.0:8080 and type in 'username' (e.g. psd, cdent, ...) and password is 'x'"
