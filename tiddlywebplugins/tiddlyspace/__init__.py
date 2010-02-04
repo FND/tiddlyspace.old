@@ -16,3 +16,6 @@ def init(config):
     merge custom config with config
     """
     merge_config(config, space_config)
+    
+    if 'selector' in config:
+        config['selector'].add('/spaces', POST=post_space_handler)
