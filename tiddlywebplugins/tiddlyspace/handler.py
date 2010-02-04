@@ -23,8 +23,8 @@ def home(environ, start_response):
     if username:
         type = 'public' # TODO: if member, use private
         recipe = Recipe('%s_%s' % (username, type))
-        route = '%s/tiddlers.wiki' % recipe_url(environ, recipe)
-        _redirect(route)
+        uri = '%s/tiddlers.wiki' % recipe_url(environ, recipe)
+        HTTP302(uri)
 
 
 @require_any_user()
@@ -55,7 +55,3 @@ def post_space_handler(environ, start_response):
         ('Content-type', 'text/plain')])
 
     return [new_space_uri]
-
-
-def _redirect(uri):
-    raise HTTP302(uri)
