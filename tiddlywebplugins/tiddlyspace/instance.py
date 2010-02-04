@@ -1,5 +1,7 @@
 from tiddlywebwiki.instance import (instance_config, store_contents, store_structure)
 
+#### TODO ensure ?bag_create_policy and ?recipe_create_policy are false (for production)
+
 def create_space(name, members, public_recipe_bags=[]):
 
   public_policy = {
@@ -49,6 +51,8 @@ def create_space(name, members, public_recipe_bags=[]):
 
 #######
 ## main
+
+store_contents['system'].append('http://github.com/FND/tiddlyspace/raw/master/src/backstageClone.recipe') # XXX: should not pollute TiddlyWebWiki bag
 
 _osmosoft = 'psd ben martin jermolene fnd simon cdent rakugo mahemoff'.split()
 for username in _osmosoft:
