@@ -22,7 +22,7 @@ def home(environ, start_response):
     if username:
         type = "public" # TODO: if member, used private
         recipe = Recipe('%s_%s' % (username, type))
-        route = '%s/tiddlers.wiki' % recipe_url(recipe)
+        route = '%s/tiddlers.wiki' % recipe_url(environ, recipe)
         _redirect(route)
 
 
@@ -31,14 +31,12 @@ def post_space_handler(environ, start_response):
     """
     entry point for posting a new space name to TiddlyWeb
     """
-    space_form = FieldStorage(fp=environ['wsgi.input'], environ=environ)
-
-    space_name = space_form['name'][0]
+    space_name = environ['tiddlyweb.query']['name'][0]
 
     space = Space(environ)
 
     try:
-        space.create_space(space_name)
+        space.create_space(space_name, environ['tiddlyweb.config']['space'])
     except RecipeExistsError, BagExistsError:
         raise HTTP409('Space already Exists: %s' % space_name)
 
@@ -48,7 +46,8 @@ def post_space_handler(environ, start_response):
     else:
         port = ''
     
-    new_space_uri = '%s/tiddlers.wiki' % recipe_url('%s_public' % space_name)
+    recipe = Recipe('%s_public' % space_name)
+    new_space_uri = '%s/tiddlers.wiki' % recipe_url(environ, recipe)
         
     start_response('303 See Other', [
         ('Location', new_space_uri),
