@@ -31,13 +31,13 @@ class Space():
         self.user = environ['tiddlyweb.usersign']
         self.name = ''
 
-    def create_space(self, space):
+    def create_space(self, name, space):
         """
         create the bags and recipes supplied by space
         
         space should be a dict of bags/recipes.
         """
-        self.name = space
+        self.name = name
         
         for bag_name, bag in space['bags'].iteritems():
             try:
@@ -76,9 +76,9 @@ class Space():
         if policy:
             for attr, value in policy.iteritems():
                 if type(value) == list:
-                    policy[attr] = [user.replace('USER_NAME', self.user.name) for user in value]
+                    policy[attr] = [user.replace('USER_NAME', self.user['name']) for user in value]
                 else:
-                    policy[attr] = value.replace('USER_NAME', self.user.name)
+                    policy[attr] = value.replace('USER_NAME', self.user['name'])
                     
             thing.policy.__dict__ = policy
 
@@ -90,7 +90,7 @@ class Space():
         """
         if desc:
             desc = desc.replace('SPACE_NAME', self.name)
-            desc = desc.replace('USER_NAME', self.user.name)
+            desc = desc.replace('USER_NAME', self.user['name'])
             thing.desc = desc
 
     def create_bag(self, name, policy=None, desc=None):
@@ -110,6 +110,7 @@ class Space():
         create a recipe
         """
         name = name.replace('SPACE_NAME', self.name)
+        recipe_contents = [(bag_name.replace('SPACE_NAME', self.name),bag_filter) for bag_name, bag_filter in recipe_contents]
         
         recipe = Recipe(name)
         
