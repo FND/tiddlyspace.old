@@ -4,6 +4,7 @@ entry point for selector urls
 
 import urllib
 
+import urllib
 from cgi import FieldStorage
 
 from tiddlyweb.model.recipe import Recipe
