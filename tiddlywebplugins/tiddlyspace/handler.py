@@ -6,6 +6,7 @@ from space import Space, BagExistsError, RecipeExistsError
 from cgi import FieldStorage
 from tiddlywebplugins.utils import require_any_user
 from tiddlyweb.web.http import HTTP409, HTTP404
+from tiddlyweb.web.util import recipe_url
 import urllib
 
 @require_any_user()
@@ -31,12 +32,7 @@ def post_space_handler(environ, start_response):
     else:
         port = ''
     
-    new_space_uri = '%s://%s%s%s/recipes/%s_public/tiddlers.wiki' % \
-        (host['scheme'],
-        host['host'],
-        port,
-        environ['tiddlyweb.config']['server_prefix'],
-        space_name)
+    new_space_uri = '%s/tiddlers.wiki' % recipe_url('%s_public' % space_name)
         
     start_response('303 See Other', [
         ('Location', new_space_uri),
