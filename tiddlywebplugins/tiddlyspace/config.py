@@ -37,7 +37,7 @@ config = {
                 "recipe": [
                     ["SPACE_NAME_public", ""]
                 ],
-                "desc": "SPACE_NAME public recipe"
+                "desc": "SPACE_NAME public recipe",
                 "policy": {
                     "read": [],
                     "create": ["USER_NAME"],
@@ -54,7 +54,7 @@ config = {
                     ["SPACE_NAME_public", ""],
                     ["SPACE_NAME_private", ""]
                 ],
-                "desc": "SPACE_NAME private recipe"
+                "desc": "SPACE_NAME private recipe",
                 "policy": {
                     "read": ["USER_NAME"],
                     "create": ["USER_NAME"],
