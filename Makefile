@@ -9,7 +9,10 @@ clean:
 	rm -r build || true
 	rm -r *.egg-info || true
 
-test:
+remotes:
+	./cacher
+
+test: remotes
 	py.test -x test
 
 dist: test
