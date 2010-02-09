@@ -9,23 +9,42 @@ from cgi import FieldStorage
 
 from tiddlyweb.model.recipe import Recipe
 from tiddlyweb.web.http import HTTP302, HTTP404, HTTP409
-from tiddlyweb.web.util import recipe_url
+from tiddlyweb.web.util import recipe_url, server_host_url
+from tiddlyweb.web.handler import root
+from tiddlyweb.web.handler.recipe import get_tiddlers
 from tiddlywebplugins.utils import require_any_user
 
 from space import Space, BagExistsError, RecipeExistsError
 
 
 def home(environ, start_response):
-    host = environ['tiddlyweb.config']['server_host']['host']
-    subdomain = environ['HTTP_HOST'].split('.%s' % host) # XXX: hacky?
-    username = subdomain[0]
+    # take the scheme off the host_url to compare with
+    # HTTP_HOST
+    host_url = server_host_url(environ).split('://', 1)[1]
+    http_host = environ.get('HTTP_HOST', host_url)
+    if http_host == host_url:
+        return root(environ, start_response)
 
-    if username:
-        type = 'public' # TODO: if member, use private
-        recipe = Recipe('%s_%s' % (username, type))
-        uri = '%s/tiddlers.wiki' % recipe_url(environ, recipe)
-        HTTP302(uri)
+    username = _determine_username_from_host(environ, http_host)
 
+    type = 'public'
+    if username == environ['tiddlyweb.usersign']['name']:
+        type = 'private'
+
+    recipe_name = '%s_%s' % (username, type)
+    environ['wsgiorg.routing_args'][1]['recipe_name'] = recipe_name
+    environ['tiddlyweb.type'] = 'text/x-tiddlywiki'
+
+    return get_tiddlers(environ, start_response)
+
+
+def _determine_username_from_host(environ, http_host):
+    """
+    Calculate the username that is associated with a domain.
+    At the moment this is just a split, but db lookups could
+    happen here.
+    """
+    return http_host.split('.')[0]
 
 @require_any_user()
 def post_space_handler(environ, start_response):
