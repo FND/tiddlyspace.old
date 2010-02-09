@@ -2,8 +2,7 @@
 entry point for selector urls
 """
 
-import urllib
-
+import logging
 import urllib
 from cgi import FieldStorage
 
@@ -22,6 +21,7 @@ def home(environ, start_response):
     # HTTP_HOST
     host_url = server_host_url(environ).split('://', 1)[1]
     http_host = environ.get('HTTP_HOST', host_url)
+    logging.debug('host and url: %s, %s', http_host, host_url)
     if http_host == host_url:
         return root(environ, start_response)
 
