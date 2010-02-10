@@ -17,6 +17,11 @@ def init(config):
     """
     merge custom config with config
     """
+    import tiddlywebwiki
+    tiddlywebwiki.init(config)
+    import tiddlywebplugins.virtualhosting
+    # calling init on virtualhosting not required
+
     merge_config(config, space_config) # XXX: we probably don't wanna do this here
 
     if 'selector' in config:

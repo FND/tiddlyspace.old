@@ -2,8 +2,7 @@
 entry point for selector urls
 """
 
-import urllib
-
+import logging
 import urllib
 from cgi import FieldStorage
 
@@ -21,10 +20,21 @@ from users import add_user, remove_user
 
 
 def home(environ, start_response):
-    # take the scheme off the host_url to compare with
+    # look at the server_host information to compare with
     # HTTP_HOST
-    host_url = server_host_url(environ).split('://', 1)[1]
+    port = int(environ['tiddlyweb.config']['server_host']['port'])
+    logging.debug('port is %s', port)
+    if port != 80 and port != 443:
+        host_url = '%s:%s' % (
+                environ['tiddlyweb.config']['server_host']['host'],
+                port
+                )
+    else:
+        host_url = '%s' % (
+                environ['tiddlyweb.config']['server_host']['host']
+                )
     http_host = environ.get('HTTP_HOST', host_url)
+    logging.debug('host and url: %s, %s', http_host, host_url)
     if http_host == host_url:
         return root(environ, start_response)
 
