@@ -1,5 +1,10 @@
 from tiddlywebwiki.instance import (instance_config, store_contents, store_structure)
 
+
+instance_config['system_plugins'] = ['tiddlywebplugins.tiddlyspace']
+instance_config['twanager_plugins'] = ['tiddlywebplugins.tiddlyspace']
+
+
 #### TODO ensure ?bag_create_policy and ?recipe_create_policy are false (for production)
 #### (in tiddlywebconfig)
 
