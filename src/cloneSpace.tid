@@ -1,5 +1,3 @@
 modifier: smm
 
-!! Clone your workspace
-
-<<cloneSpace>>
+<<createSpace>>
