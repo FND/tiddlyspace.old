@@ -25,7 +25,7 @@ config.macros.cloneSpace.doCreate = function(w) {
 
 	// call bens code 
 	jQuery.ajax({type:'POST', url:'/spaces', data:{'name':spaceName}, success:function(response) {
-		if(response.status==='303')
+		if(response.status=='303')
 			alert('space has been created');
 		else 
 			alert('there was a problem creating the space');
