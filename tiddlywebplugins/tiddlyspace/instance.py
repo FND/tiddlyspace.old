@@ -107,6 +107,25 @@ store_structure['bags']['_private'] = {
 }
 
 ###################################################################
+## set up homepage bag
+###################################################################
+
+store_structure['bags']['_homepage'] = {
+  'desc': 'TiddlySpace landing page',
+  'policy': {
+    'read': [],
+    'write': ['R:ADMIN'],
+    'create': ['R:ADMIN'],
+    'delete': ['R:ADMIN'],
+    'manage': ['R:ADMIN'],
+    'accept': ['R:ADMIN'],
+    'owner': 'administrator'
+  }
+}
+
+store_contents['_homepage'] = ['http://github.com/FND/tiddlyspace/raw/master/src/homepage/index.recipe']
+
+###################################################################
 ## set up sample users and their spaces
 ###################################################################
 

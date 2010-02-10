@@ -9,7 +9,6 @@ from cgi import FieldStorage
 from tiddlyweb.model.recipe import Recipe
 from tiddlyweb.web.http import HTTP302, HTTP404, HTTP409, HTTP400, HTTP403
 from tiddlyweb.web.util import recipe_url, server_host_url
-from tiddlyweb.web.handler import root
 from tiddlyweb.web.handler.recipe import get_tiddlers
 from tiddlywebplugins.utils import require_any_user
 from tiddlyweb.model.policy import ForbiddenError, UserRequiredError
@@ -36,7 +35,7 @@ def home(environ, start_response):
     http_host = environ.get('HTTP_HOST', host_url)
     logging.debug('host and url: %s, %s', http_host, host_url)
     if http_host == host_url:
-        return root(environ, start_response)
+        return intro(environ, start_response)
 
     username = _determine_username_from_host(environ, http_host)
 
@@ -51,6 +50,17 @@ def home(environ, start_response):
     return get_tiddlers(environ, start_response)
 
 
+def intro(environ, start_response):
+    """
+    serves landing page generated from tiddlers in _homepage bag
+    """
+    from tiddlyweb.web.handler.tiddler import get as get_tiddler
+
+    environ['wsgiorg.routing_args'][1]['bag_name'] = '_homepage'
+    environ['wsgiorg.routing_args'][1]['tiddler_name'] = 'index.html'
+    return get_tiddler(environ, start_response)
+
+
 def _determine_username_from_host(environ, http_host):
     """
     Calculate the username that is associated with a domain.
@@ -58,6 +68,7 @@ def _determine_username_from_host(environ, http_host):
     happen here.
     """
     return http_host.split('.')[0]
+
 
 @require_any_user()
 def post_space_handler(environ, start_response):
@@ -90,6 +101,7 @@ def post_space_handler(environ, start_response):
 
     return [new_space_uri]
 
+
 @require_any_user()
 def post_adduser_to_space_handler(environ, start_response):
     """
@@ -99,7 +111,7 @@ def post_adduser_to_space_handler(environ, start_response):
     if 'user' not in environ['tiddlyweb.query']:
         raise HTTP400('No user supplied')
     user_to_add = environ['tiddlyweb.query']['user'][0]
-    
+
     try:
         add_user(environ, space_name, user_to_add)
     except NoUserError:
@@ -112,12 +124,13 @@ def post_adduser_to_space_handler(environ, start_response):
         raise HTTP403('You do not have permission to add %s to %s' % (user_to_add, space_name))
     except UserRequiredError:
         raise HTTP403('You do not have permission to add %s to %s' % (user_to_add, space_name))
-        
+
     start_response('204 No Content', [
         ('Content-type', 'text/plain')
     ])
-    
+
     return []
+
 
 @require_any_user()
 def post_removeuser_from_space_handler(environ, start_response):
@@ -128,7 +141,7 @@ def post_removeuser_from_space_handler(environ, start_response):
     if 'user' not in environ['tiddlyweb.query']:
         raise HTTP400('No user supplied')
     user_to_remove = environ['tiddlyweb.query']['user'][0]
-    
+
     try:
         remove_user(environ, space_name, user_to_remove)
     except NoUserError:
@@ -141,9 +154,9 @@ def post_removeuser_from_space_handler(environ, start_response):
         raise HTTP403('You do not have permission to remove %s from %s' % (user_to_remove, space_name))
     except UserRequiredError:
         raise HTTP403('You do not have permission to remove %s from %s' % (user_to_remove, space_name))
-        
+
     start_response    ('204 No Content', [
             ('Content-type', 'text/plain')
         ])
-    
+
     return []

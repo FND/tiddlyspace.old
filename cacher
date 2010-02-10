@@ -5,8 +5,11 @@ creates local cache of instance tiddlers to be included in distribution
 """
 
 import sys
+import os
 
 import mangler
+
+from tiddlyweb.util import read_utf8_file, write_utf8_file, std_error_message
 
 from tiddlywebplugins.instancer.util import cache_tiddlers
 
@@ -15,6 +18,20 @@ PACKAGE_NAME = 'tiddlywebplugins.tiddlyspace'
 
 
 def main(args):
+    # generate tiddlers from homepage -- XXX: specific version of TiddlyRecon's more generic cacher
+    homepage_dir = 'src/homepage'
+    bag_name = 'homepage'
+    for filename in ['index.html', 'main.css']:
+        content_type = 'type: text/%s' % filename.split('.')[1]
+        filepath = os.path.join(homepage_dir, filename)
+        text = read_utf8_file(filepath)
+        if filename.endswith('.html'): # XXX: special-casing magic
+            text = text.replace('main.css', 'bags/_homepage/main.css')
+        tiddler = '%s\n\n%s' % (content_type, text)
+        tiddler_path = '%s.tid' % filepath
+        std_error_message('creating %s' % tiddler_path)
+        write_utf8_file(tiddler_path, tiddler)
+
     cache_tiddlers(PACKAGE_NAME)
     return True
 
