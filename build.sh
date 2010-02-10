@@ -1,4 +1,19 @@
-#!/bin/bash -ex
+#!/bin/bash
+
+python -c 'import tiddlywebwiki'
+if [ $? != '0' ] ; then
+  echo 'need tiddlywebwiki'
+  sudo pip install -U tiddlywebwiki
+fi
+
+python -c 'import tiddlywebplugins.virtualhosting'
+if [ $? != '0' ] ; then
+  echo 'need virtualhosting'
+  sudo pip install tiddlywebplugins.virtualhosting
+fi
+
+##############################################################################
+
 instance="instance"
 if [ -d $instance ] ; then
   mv $instance /tmp/tiddlyspace-server-$$
@@ -8,6 +23,10 @@ fi
 ./tiddlyspace $instance
 
 cd $instance
+ln -s ../tiddlywebplugins .
+ln -s ../mangler.py .
+sed -i '' "s/# A basic configuration\./import mangler/g" tiddlywebconfig.py
+
 osmosoft='psd ben martin jermolene fnd simon cdent rakugo mahemoff'
 for user in $osmosoft ; do
   twanager userpass $user x

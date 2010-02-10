@@ -3,4 +3,5 @@
 import mangler
 config = {
         'system_plugins': ['tiddlywebplugins.tiddlyspace'],
+        'roc': 'f'
         }
