@@ -34,17 +34,6 @@ def setup_module(module):
     module.store = Store(config['server_store'][0], config['server_store'][1], environ)
 
 
-def test_get_root():
-    http = httplib2.Http()
-
-    response, content = http.request('http://our_test_domain:8001/',
-            method='GET')
-
-    assert response['status'] == '200'
-    assert 'bags' in content
-    assert 'recipes' in content
-
-
 def test_get_other_host_unauth():
     http = httplib2.Http()
 
