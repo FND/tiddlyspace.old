@@ -70,7 +70,9 @@ def post_space_handler(environ, start_response):
 
     try:
         space.create_space(space_name, environ['tiddlyweb.config']['space'])
-    except RecipeExistsError, BagExistsError:
+    except RecipeExistsError:
+        raise HTTP409('Space already Exists: %s' % space_name)
+    except BagExistsError:
         raise HTTP409('Space already Exists: %s' % space_name)
 
     host = environ['tiddlyweb.config']['server_host']
@@ -102,9 +104,13 @@ def post_adduser_to_space_handler(environ, start_response):
         add_user(environ, space_name, user_to_add)
     except NoUserError:
         raise HTTP400('User does not exist: %s' % user_to_add)
-    except NoBagError, NoRecipeError:
+    except NoBagError:
         raise HTTP404('Space not found: %s' % space_name)
-    except ForbiddenError, UserRequiredError:
+    except NoRecipeError:
+        raise HTTP404('Space not found: %s' % space_name)
+    except ForbiddenError:
+        raise HTTP403('You do not have permission to add %s to %s' % (user_to_add, space_name))
+    except UserRequiredError:
         raise HTTP403('You do not have permission to add %s to %s' % (user_to_add, space_name))
         
     start_response('204 No Content', [
@@ -127,9 +133,13 @@ def post_removeuser_from_space_handler(environ, start_response):
         remove_user(environ, space_name, user_to_remove)
     except NoUserError:
         raise HTTP400('User does not exist: %s' % user_to_add)
-    except NoBagError, NoRecipeError:
+    except NoBagError:
         raise HTTP404('Space not found: %s' % space_name)
-    except ForbiddenError, UserRequiredError:
+    except NoRecipeError:
+        raise HTTP404('Space not found: %s' % space_name)
+    except ForbiddenError:
+        raise HTTP403('You do not have permission to remove %s from %s' % (user_to_remove, space_name))
+    except UserRequiredError:
         raise HTTP403('You do not have permission to remove %s from %s' % (user_to_remove, space_name))
         
     start_response    ('204 No Content', [
