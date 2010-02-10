@@ -27,6 +27,7 @@ setup(
         'tiddlyweb',
         'tiddlywebwiki',
         'tiddlywebplugins.utils',
+        'tiddlywebplugins.virtualhosting',
         ],
     zip_safe = False,
     include_package_data = True,
