@@ -1,6 +1,7 @@
 """
 Define a class suitable for creating a space
 """
+
 from tiddlyweb.model.bag import Bag
 from tiddlyweb.model.recipe import Recipe
 from tiddlyweb.store import NoBagError, NoRecipeError
@@ -12,15 +13,17 @@ class BagExistsError(Exception):
     """
     pass
 
+
 class RecipeExistsError(Exception):
     """
     raised when a recipe already exists and create_recipe is called
     """
     pass
 
-class Space():
+
+class Space(object):
     """
-    create a space, consisting of a combination 
+    create a space, consisting of a combination
     of bags/recipes.
     """
     def __init__(self, environ):
@@ -34,17 +37,17 @@ class Space():
     def create_space(self, name, space):
         """
         create the bags and recipes supplied by space
-        
+
         space should be a dict of bags/recipes.
         """
         self.name = name
-        
+
         for bag_name, bag in space['bags'].iteritems():
             try:
                 self.create_bag(bag_name, bag.get('policy'), bag.get('desc'))
             except BagExistsError:
                 pass
-        
+
         for recipe_name, recipe in space['recipes'].iteritems():
             try:
                 self.create_recipe(recipe_name, recipe['recipe'], \
@@ -55,7 +58,7 @@ class Space():
     def exists(self, thing):
         """
         test if the object passed in exists
-        
+
         return the object if it does, None if it doesn't
         """
         try:
@@ -64,7 +67,7 @@ class Space():
             return None
         except NoRecipeError:
             return None
-        
+
         return obj
 
     def set_policy(self, policy, thing):
@@ -79,7 +82,7 @@ class Space():
                     policy[attr] = [user.replace('USER_NAME', self.user['name']) for user in value]
                 else:
                     policy[attr] = value.replace('USER_NAME', self.user['name'])
-                    
+
             thing.policy.__dict__ = policy
 
     def set_desc(self, desc, thing):
@@ -99,10 +102,10 @@ class Space():
         """
         name = name.replace('SPACE_NAME', self.name)
         bag = Bag(name)
-        
+
         if self.exists(bag):
             raise BagExistsError('%s already exists' % self.name)
-            
+
         self._put_thing(bag, policy, desc)
 
     def create_recipe(self, name, recipe_contents, policy=None, desc=None):
@@ -110,15 +113,15 @@ class Space():
         create a recipe
         """
         name = name.replace('SPACE_NAME', self.name)
-        recipe_contents = [(bag_name.replace('SPACE_NAME', self.name),bag_filter) for bag_name, bag_filter in recipe_contents]
-        
+        recipe_contents = [(bag_name.replace('SPACE_NAME', self.name), bag_filter) for bag_name, bag_filter in recipe_contents]
+
         recipe = Recipe(name)
-        
+
         if self.exists(recipe):
             raise RecipeExistsError('%s already exists' % name)
-        
+
         recipe.set_recipe(recipe_contents)
-        
+
         self._put_thing(recipe, policy, desc)
 
     def _put_thing(self, thing, policy, desc):
@@ -127,5 +130,5 @@ class Space():
         """
         self.set_policy(policy, thing)
         self.set_desc(desc, thing)
-        
+
         self.store.put(thing)

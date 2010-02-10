@@ -1,6 +1,11 @@
+#### TODO ensure ?bag_create_policy and ?recipe_create_policy are false (for production)
+
 from tiddlywebwiki.instance import (instance_config, store_contents, store_structure)
 
-#### TODO ensure ?bag_create_policy and ?recipe_create_policy are false (for production)
+
+instance_config['system_plugins'] = ['tiddlywebplugins.tiddlyspace']
+instance_config['twanager_plugins'] = ['tiddlywebplugins.tiddlyspace']
+
 
 def create_space(name, members, public_recipe_bags=[]):
 
