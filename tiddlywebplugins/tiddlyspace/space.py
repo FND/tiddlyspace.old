@@ -43,17 +43,11 @@ class Space(object):
         self.name = name
 
         for bag_name, bag in space['bags'].iteritems():
-            try:
-                self.create_bag(bag_name, bag.get('policy'), bag.get('desc'))
-            except BagExistsError:
-                pass
+            self.create_bag(bag_name, bag.get('policy'), bag.get('desc'))
 
         for recipe_name, recipe in space['recipes'].iteritems():
-            try:
-                self.create_recipe(recipe_name, recipe['recipe'], \
-                    recipe.get('policy'), recipe.get('desc'))
-            except RecipeExistsError:
-                pass
+            self.create_recipe(recipe_name, recipe['recipe'], \
+                recipe.get('policy'), recipe.get('desc'))
 
     def exists(self, thing):
         """
