@@ -143,8 +143,8 @@ for username in _osmosoft:
 ## set up sample content spaces
 ###################################################################
 
-create_space('book',      ['psd'],   ['book_public'])
-create_space('book_demo', ['psd'],   ['book_public', 'book_demo_public'])
-create_space('osmobook',  _osmosoft, ['book_public', 'osmobook_public'])
+create_space('book_plugins', ['psd'],   ['book_plugins_public'])
+create_space('book',         ['psd'],   ['book_plugins_public', 'book_public'])
+create_space('osmobook',     _osmosoft, ['book_plugins_public', 'osmobook_public'])
 
 # store_contents['book_public'].append('http://hoster.peermore.com/recipes/TiddlyPocketBook.tiddlywiki')
