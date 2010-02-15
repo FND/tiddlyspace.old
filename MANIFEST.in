@@ -1,2 +1,2 @@
-recursive-include test *
+recursive-include tiddlywebplugins/tiddlyspace/resources *
 include README Makefile
