@@ -135,7 +135,8 @@ _osmosoft = 'psd ben martin jermolene fnd simon cdent rakugo mahemoff'.split()
 for username in _osmosoft:
   store_structure['users'][username] = {
       'note': 'Osmosoftonian',
-      'roles': ['ADMIN']
+      'roles': ['ADMIN'],
+      '_password': 'x'
   }
   create_space(username, [username], [username+'_public'])
 
