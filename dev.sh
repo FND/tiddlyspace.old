@@ -26,6 +26,11 @@ fi
 # ./tiddlyspace $instance
 twinstance_dev tiddlywebplugins.tiddlyspace $instance
 
+cat >> $instance/tiddlywebconfig.py <<EOF
+from devtiddlers import update_config
+update_config(config)
+EOF
+
 ##############################################################################
 # Include dependencies. In production, we would apparently just rely
 # on pip packages being present, but for now, we need to mangle
