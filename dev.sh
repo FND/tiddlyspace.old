@@ -37,32 +37,16 @@ EOF
 # tiddlywebconfig manually. (this is fragile!)
 ##############################################################################
 
-exit
-cd $instance
-ln -s ../tiddlywebplugins .
-ln -s ../mangler.py .
-sed -i '' "s/# A basic configuration\./import mangler/g" tiddlywebconfig.py
-
-##############################################################################
-# populate user passwords, as tiddlyweb instancer mechanism doesn't allow for it
-# (http://groups.google.com/group/tiddlyweb/browse_thread/thread/274ed6d9417740b4/83483050f8020080)
-##############################################################################
-
-osmosoft='psd ben martin jermolene fnd simon cdent rakugo mahemoff'
-for user in $osmosoft ; do
-  twanager userpass $user x
-done
-
 ##############################################################################
 # populate with sample data
 ##############################################################################
 
+cd $instance
 twanager twimport book_plugins_public http://hoster.peermore.com/recipes/TiddlyPocketBook/tiddlers.wiki
-
 twanager twimport book_public http://hoster.peermore.com/bags/TiddlyPocketBook%20-%20TiddlyWiki%20Cheatsheet/tiddlers.wiki
-
 # not exactly DRY - lots of simulating cloning here
 twanager twimport osmobook_public http://hoster.peermore.com/bags/TiddlyPocketBook%20-%20TiddlyWiki%20Cheatsheet/tiddlers.wiki
+cd -
 
 ##############################################################################
 # tell the developer what just happened
