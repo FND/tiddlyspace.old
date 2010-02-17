@@ -93,11 +93,10 @@ def post_space_handler(environ, start_response):
     recipe = Recipe('%s_public' % space_name)
     new_space_uri = '%s/tiddlers.wiki' % recipe_url(environ, recipe)
 
-    start_response('303 See Other', [
+    start_response('201 Created', [
         ('Location', new_space_uri),
         ('Content-type', 'text/plain')])
-
-    return [new_space_uri]
+    return new_space_uri
 
 
 @require_any_user()
