@@ -44,7 +44,3 @@ def get_user(environ, start_response):
 def put_user(environ, start_response):
     store = environ['tiddlyweb.store']
     pass
-
-
-def init(config):
-    
