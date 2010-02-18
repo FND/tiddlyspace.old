@@ -99,7 +99,7 @@ store_structure['bags']['_public'] = {
   'policy': open_policy
 }
 
-store_contents['_public'] = ['src/backstageClone.recipe']
+store_contents['_public'] = ['src/split.recipe']
 
 ###################################################################
 ## set up global private bag

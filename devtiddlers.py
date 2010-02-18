@@ -1,5 +1,5 @@
 instance_tiddlers = {
-    '_public': ['../src/backstageClone.recipe'],
+    '_public': ['../src/split.recipe'],
     'system': ['../src/TiddlyWebAdaptor.js']
 }
 
