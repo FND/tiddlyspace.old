@@ -1,8 +1,7 @@
 instance_tiddlers = {
     '_public': ['../src/split.recipe'],
     '_private': ['../src/private/split.recipe'],
-    'dashboard':['../src/dashboard/split.recipe'],
-    'system': ['../src/TiddlyWebAdaptor.js']
+    'dashboard':['../src/dashboard/split.recipe']
 }
 
 
