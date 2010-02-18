@@ -1,0 +1,3 @@
+modifier: mahemoff
+
+.remove { margin-left: 0.5em; color: red; cursor: pointer; }
