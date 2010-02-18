@@ -45,6 +45,8 @@ config['space'] = { # XXX: WTF?
     'recipes': {
         "SPACE_NAME_public": {
             "recipe": [
+                ["system", ""],
+                ["_public", ""],
                 ["SPACE_NAME_public", ""]
             ],
             "desc": "SPACE_NAME public recipe",
@@ -61,6 +63,7 @@ config['space'] = { # XXX: WTF?
         "SPACE_NAME_private": {
             "recipe": [
                 ["system", ""],
+                ["_private", ""],
                 ["SPACE_NAME_public", ""],
                 ["SPACE_NAME_private", ""]
             ],
