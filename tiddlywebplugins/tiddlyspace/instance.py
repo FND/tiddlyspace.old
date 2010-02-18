@@ -15,7 +15,7 @@ instance_config['twanager_plugins'] = ['tiddlywebplugins.tiddlyspace']
 def create_space(name, members, public_recipe_bags=[]):
 
   ###################################################################
-  # Set up stock policies
+  # Set up stock public and private policies
   ###################################################################
 
   public_policy = {
@@ -35,8 +35,8 @@ def create_space(name, members, public_recipe_bags=[]):
   ###################################################################
   # Set up recipes
   # The "lambda" line performs a trivial data format transform,
-  # from array ["bag1,bag2,bagN"]
-  # to dict { bag: "bag1", bag: "bag2", bag "bag3" },
+  # from array ['bag1,bag2']
+  # to array of tuples [('bag1', ''),('bag2,'')]
   # as required for the instancer data structure.
   ###################################################################
 
@@ -69,15 +69,11 @@ def create_space(name, members, public_recipe_bags=[]):
 
   private_recipe_lines = []
   private_recipe_lines.extend(public_recipe_lines)
-  private_recipe_lines.extend(['_private',name+"_private"])
+  private_recipe_lines.extend([('_private',''),(name+'_private', '')])
   store_structure['recipes'][name+'_private'] = {
     'desc': 'todo',
     'policy': private_policy,
-    'recipe': [
-      ('system', ''),
-      (name+'_public', ''),
-      (name+'_private', '')
-    ]
+    'recipe': private_recipe_lines
   }
 
 #=======================================================================

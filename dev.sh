@@ -1,6 +1,6 @@
 #!/bin/bash -ex
 
-git pull
+# git pull
 
 ##############################################################################
 # ensure dependencies are present
@@ -13,7 +13,7 @@ git pull
 ##############################################################################
 
 # ./cacher
-make remotes
+# make remotes
 
 ##############################################################################
 # make an instance dir, getting the previous one out of the way
