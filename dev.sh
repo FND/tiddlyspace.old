@@ -44,6 +44,10 @@ EOF
 cd $instance
 twanager twimport book_plugins_public http://hoster.peermore.com/recipes/TiddlyPocketBook/tiddlers.wiki
 twanager twimport book_public http://hoster.peermore.com/bags/TiddlyPocketBook%20-%20TiddlyWiki%20Cheatsheet/tiddlers.wiki
+
+# This is required untill tiddlywebAdaptor 1.1.1 is packaged with tiddlywebwiki
+twanager twimport system http://svn.tiddlywiki.org/Trunk/association/adaptors/TiddlyWebAdaptor.js
+
 # not exactly DRY - lots of simulating cloning here
 twanager twimport osmobook_public http://hoster.peermore.com/bags/TiddlyPocketBook%20-%20TiddlyWiki%20Cheatsheet/tiddlers.wiki
 cd -
