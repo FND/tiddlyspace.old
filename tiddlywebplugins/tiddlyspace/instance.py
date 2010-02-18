@@ -40,7 +40,7 @@ def create_space(name, members, public_recipe_bags=[]):
   # as required for the instancer data structure.
   ###################################################################
 
-  public_recipe_bags.extend(["_public","system"])
+  public_recipe_bags.extend(["system","_public"])
   public_recipe_lines = map(lambda bag: (bag, ''), public_recipe_bags)
 
   ###################################################################
@@ -99,7 +99,7 @@ store_structure['bags']['_public'] = {
   'policy': open_policy
 }
 
-store_contents['_public'] = ['src/backstageClone.recipe']
+store_contents['_public'] = ['src/split.recipe']
 
 ###################################################################
 ## set up global private bag
