@@ -97,7 +97,6 @@ config.macros.createSpace.testcallback2 = function(context,userParams) {
 	// now put the tiddlers to the new workspace
 	for(i=0;i<context.tiddlers.length;i++) {
 		tiddler = context.tiddlers[i];
-		tiddler.text = "";
 		tiddler.fields['server.workspace'] = context.workspace;
 		delete tiddler.fields['server.page.revision'];
 		context.adaptor.putTiddler(tiddler,context);
