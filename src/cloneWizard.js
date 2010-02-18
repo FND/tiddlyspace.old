@@ -31,21 +31,16 @@ config.macros.createSpace.doCreate = function(w) {
 
 config.macros.createSpace.doClone = function(w) {
 	config.macros.createSpace.doCreate(w);
-	console.log(w.getValue('cloneName').value);
-	// call bens code 
-	// call martins code 
-
-	var params = {	host:window.location.host,
+	var params = {host:window.location.host,
 			original:'osmobook_public',
 			manage:[config.options.txtUserName],
 			owner:config.options.txtUserName,
-			clone:w.getValue('cloneName').value};
+			clone:w.getValue('cloneName').value + '_public' };
 
 	config.macros.createSpace.test(params);
 };
 
-config.macros.createSpace.test = function(params)
-{
+config.macros.createSpace.test = function(params) {
 	clearMessage();
 	displayMessage("Testing");
 	var adaptor = new config.adaptors['tiddlyweb']();
@@ -55,8 +50,7 @@ config.macros.createSpace.test = function(params)
 		displayMessage(ret);
 };
 
-config.macros.createSpace.testcallback = function(context,userParams)
-{
+config.macros.createSpace.testcallback = function(context,userParams) {
 	displayMessage("Testing callback");
 
 	// update the recipes
@@ -78,8 +72,7 @@ config.macros.createSpace.testcallback = function(context,userParams)
 		displayMessage(ret);
 };
 
-config.macros.createSpace.testcallback2 = function(context,userParams)
-{
+config.macros.createSpace.testcallback2 = function(context,userParams) {
 	displayMessage("Testing callback2");
 
 	store.suspendNotifications();
@@ -95,9 +88,11 @@ config.macros.createSpace.testcallback2 = function(context,userParams)
 	autoSaveChanges();
 
 	context.workspace = 'bags/' + userParams.clone;
+	context.format = null;
 	context.callback = null;
+	context.recipe = userParams.clone;
 	// copy the recipe to the new workspace
-	//context.adaptor.putRecipe(context);
+	context.adaptor.putRecipe(context);
 
 	// now put the tiddlers to the new workspace
 	for(i=0;i<context.tiddlers.length;i++) {
