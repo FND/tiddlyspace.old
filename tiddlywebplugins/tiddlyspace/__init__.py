@@ -10,7 +10,8 @@ from tiddlyweb.util import merge_config
 from tiddlywebplugins.utils import replace_handler
 
 from config import config as space_config
-from handler import home, post_space_handler, post_adduser_to_space_handler, post_removeuser_from_space_handler
+from handler import home, post_space_handler
+from users import list_users, get_user, put_user
 
 
 def init(config):
@@ -27,5 +28,5 @@ def init(config):
     if 'selector' in config:
         replace_handler(config['selector'], '/', dict(GET=home))
         config['selector'].add('/spaces[/]', POST=post_space_handler)
-        config['selector'].add('/adduser/{space_name:segment}[/]', POST=post_adduser_to_space_handler)
-        config['selector'].add('/removeuser/{space_name:segment}[/]', POST=post_removeuser_from_space_handler)
+        config['selector'].add('/users', GET=list_users)
+        config['selector'].add('/users/{usersign}', GET=get_user, PUT=put_user)
