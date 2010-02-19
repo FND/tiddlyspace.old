@@ -1,3 +1,3 @@
-config.backstageTasks.push("manageUsers");
-merge(config.tasks,{manageUsers:{text: 'users',tooltip: 'click to manage users in this space',content: '<<manageUsers>>'}});
+config.backstageTasks.push("managemembers");
+merge(config.tasks,{managemembers:{text: 'members',tooltip: 'click to manage members in this space',content: '<<manageMembers>>'}});
 

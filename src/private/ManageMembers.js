@@ -1,20 +1,20 @@
 /***
-|Name|Manage Users|
+|Name|Manage members|
 |Version|0.1|
 |Author|Ben Gillies, Michael Mahemoff|
 |Type|plugin|
-|Description|Add and remove users from tiddlyspace|
+|Description|Add and remove members from tiddlyspace|
 !Usage
-&lt;&lt;manageUsers action:add space:spacename>>
-&lt;&lt;manageUsers action:remove space:spacename>
-&lt;&lt;manageUsers action:list space:spacename>
+&lt;&lt;manageMembers action:add space:spacename>>
+&lt;&lt;manageMembers action:remove space:spacename>
+&lt;&lt;manageMembers action:list space:spacename>
 !Code
 ***/
 //{{{
 
 (function($) {
 
-  config.macros.manageUsers = {
+  config.macros.manageMembers = {
     handler: function(place, macroName, params, wikifier, paramString, tiddler) {
       renderSpace(place);
     }
