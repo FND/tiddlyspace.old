@@ -13,7 +13,7 @@
 ##############################################################################
 
 # ./cacher
-# make remotes
+make remotes
 
 ##############################################################################
 # make an instance dir, getting the previous one out of the way
