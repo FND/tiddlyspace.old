@@ -7,13 +7,27 @@
     }
   });
 
-  test("data model", function() {
+  test("name", function() {
     equals(space.getName(), "book");
+  });
+
+  test("members", function() {
+
+    equals(space.getMembers().length, 2);
     ok(space.isMember("psd"));
-    ok(! space.isMember("badguy"));
+    ok(! space.isMember("ben"));
+
+    space.addMember("ben");
+    ok(space.isMember("ben"));
+    equals(space.getMembers().length, 3);
+
+    space.removeMember("ben");
+    ok(! space.isMember("ben"));
+
   });
 
   test("public bag", function() {
+    console.log(space.getPublicBag().policy);
     var expected = {
       policy: {
         read: [],             create: ["fnd","psd"], manage: ["fnd","psd"], accept: ["fnd","psd"],
@@ -60,3 +74,18 @@
     };
     ok(_.isEqual(expected, space.getPrivateRecipe()));
   });
+
+  test("empty space", function() {
+    space.removeMember("fnd");
+    space.removeMember("psd");
+    var expected = {
+      policy: {
+        read: [], create: ["NONE"], manage: ["NONE"], accept: ["NONE"],
+        write: ["NONE"], owner: ["NONE"], "delete": ["NONE"]
+      },
+      desc: ""
+    };
+    ok(_.isEqual(expected, space.getPublicBag()));
+  });
+
+

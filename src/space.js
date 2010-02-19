@@ -1,27 +1,50 @@
 function Space(name, members, subscriptions) {
 
   var name = name;
-  var members = members.sort();
   var subscriptions = subscriptions;
+  var members = members.sort();
   var space = this;
 
   this.isMember = function(member) {
     return _(members).include(member);
   }
 
+  this.getMembers = function(member) {
+    return _(members).clone();
+  }
+
+  this.addMember = function(member) {
+    members = members.concat(member);
+    members.sort();
+  }
+
+  this.removeMember = function(member) {
+    members = _(members).without(member);
+    members.sort();
+  }
+
   this.getName = function(member) {
     return name;
   }
 
+  function getPolicyMembers() {
+    return members.length ? members : ["NONE"];
+  }
+
   function getPublicPolicy() {
     return {
-      read: [], create: members, manage: members, accept: members,
-      write: members, owner: members, "delete": members
+      "read": [],
+      "create": getPolicyMembers(members),
+      "manage": getPolicyMembers(members),
+      "accept": getPolicyMembers(members),
+      "write":  getPolicyMembers(members),
+      "owner":  getPolicyMembers(members),
+      "delete": getPolicyMembers(members)
     };
   }
 
   function getPrivatePolicy() {
-    return _(getPublicPolicy()).extend({read: members});
+    return _(getPublicPolicy()).extend({"read": getPolicyMembers(members)});
   }
 
   this.getPublicBag = function() {
@@ -58,7 +81,5 @@ function Space(name, members, subscriptions) {
     };
    var publicRecipe = this.getPublicPolicy(member);
   }
-
-
 
 }

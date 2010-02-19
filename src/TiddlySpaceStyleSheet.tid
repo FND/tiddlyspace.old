@@ -1,3 +1,11 @@
 modifier: mahemoff
 
-.remove { margin-left: 0.5em; color: red; cursor: pointer; }
+
+/******************************************************************************
+   Manage Members
+ *****************************************************************************/
+
+.manageMembers ul { list-style-type: none; padding: 0; margin: 0; }
+.manageMembers button { margin-left: 0.5em; }
+.manageMembers h4 { margin-bottom: 0.5em; }
+.removeMember { margin-right: 0.5em; color: red; cursor: pointer; }

@@ -1,4 +1,7 @@
+tiddler: underscore.js
 tiddler: json.js
+tiddler: space.js
+tiddler: spaceStore.js
 tiddler: addBackstage.js
 tiddler: cloneWizard.js
 tiddler: cloneSpace.tid
