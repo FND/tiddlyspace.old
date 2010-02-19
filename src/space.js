@@ -1,9 +1,25 @@
-function Space(name, members, subscriptions) {
+/* Usage:
+ * new Space(name, subscriptions, members)
+ * new Space(name, publicBag)
+ */
+function Space(name, spec) {
 
-  var name = name;
-  var subscriptions = subscriptions.sort();
-  var members = members.sort();
-  var space = this;
+  var name, members, subcriptions;
+
+  name = arguments[0];
+
+  if (arguments.length==3) {
+    members = arguments[1].sort();
+    subscriptions = arguments[2].sort();
+  } else {
+    console.log(arguments);
+    var publicRecipe = arguments[1];
+    members = _(publicRecipe.policy.write).clone().sort();
+    subscriptions = _(publicRecipe.recipe).chain()
+      .map(function(filteredBag) { return filteredBag[0]; })
+      .without("system", "_private", "_public", name+"_public")
+      .map(function(bag) { return bag.replace(/_public$/, ""); }) .value();
+  }
 
   this.isMember = function(member) {
     return _(members).include(member);

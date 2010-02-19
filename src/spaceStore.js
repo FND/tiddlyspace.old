@@ -4,18 +4,15 @@ var spaceStore;
 
   spaceStore = {
     get: function(name, handler) {
-      var url = composePublicBagURL(name);
+      var url = composePublicRecipeURL(name);
       jQuery.ajax({
         url: url,
         type: 'GET',
         dataType: 'json',
-        success: function(bag) {
-          console.log("bag", bag);
-          handler(new Space(
-            name,
-            bag.policy.write, // members
-            [] // TODO
-          ));
+        success: function(recipe) {
+          var space = new Space(name, recipe);
+          console.log(space.subscriptions);
+          handler(new Space(name, recipe));
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
           displayMessage("error loading space " + name);

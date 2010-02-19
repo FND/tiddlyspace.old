@@ -72,7 +72,6 @@
   });
 
   test("private recipe", function() {
-    console.log(space.getPrivateRecipe());
     var expected = {
       policy: {
         read:  ["fnd","psd"], create: ["fnd","psd"], manage:   ["fnd","psd"], accept: ["fnd","psd"],
@@ -83,6 +82,21 @@
       desc: ""
     };
     equals(expected, space.getPrivateRecipe());
+  });
+
+  test("make space from public recipe", function() {
+    var scrumptious = new Space("scrumptious", {
+      policy: {
+        read:  ["psd","fnd"], create: ["psd","fnd"], manage:   ["psd","fnd"], accept: ["psd","fnd"],
+        write: ["psd","fnd"], owner:  ["psd","fnd"], "delete": ["psd","fnd"]
+      },
+      recipe: [ ["system",""], ["_public",""], ["blog_public",""], ["comments_public", ""],
+                ["scrumptious_public",""] ],
+      desc: ""
+    });
+    equals(scrumptious.getName(), "scrumptious");
+    equals(scrumptious.getMembers(), ["fnd", "psd"]);
+    equals(scrumptious.getSubscriptions(), ["blog", "comments"]);
   });
 
   test("empty space", function() {

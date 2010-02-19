@@ -5,9 +5,7 @@
 |Type|plugin|
 |Description|Add and remove members from tiddlyspace|
 !Usage
-&lt;&lt;manageMembers action:add space:spacename>>
-&lt;&lt;manageMembers action:remove space:spacename>
-&lt;&lt;manageMembers action:list space:spacename>
+&lt;&lt;manageMembers&gt;&gt;
 !Code
 ***/
 //{{{
@@ -16,23 +14,22 @@
 
   config.macros.manageMembers = {
     handler: function(place, macroName, params, wikifier, paramString, tiddler) {
-      renderSpace(place);
+      renderSubscriptions(place);
     }
   };
 
-  function renderSpace(place) {
-    $members = $("<div class='manageMembers' />");
+  function renderSubscriptions(place) {
+    $members = $("<div class='manage manageMembers' />");
 
     var $newMember = $("<input />").appendTo($members).keyup(function(ev) {
       var key = ev.charCode || ev.keyCode || 0;
-      console.log(key);
       if (key==13) $(this).siblings("button").click(); // RETURN => click add
     });
 
     $("<button>Add Member</button>").appendTo($members).click(function() {
       spaceStore.getFromCurrentURL(function(space) {
         space.addMember($newMember.val());
-        spaceStore.put(space, function() { renderSpace(place); });
+        spaceStore.put(space, function() { renderSubscriptions(place); });
       });
     });
 
@@ -41,7 +38,7 @@
     spaceStore.getFromCurrentURL(function(space) {
       $.each(space.getMembers(), function(i, member) {
         var $member = $("<li/>").appendTo($list);
-        $("<span class='removeMember'>X</span>").appendTo($member).click(function() {
+        $("<span class='remove'>X</span>").appendTo($member).click(function() {
           var unwanted = $(this).next().html();
           space.removeMember(unwanted);
           spaceStore.put(space, function() { renderSpace(place); });

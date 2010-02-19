@@ -1,11 +1,10 @@
 modifier: mahemoff
 
-
 /******************************************************************************
-   Manage Members
+   Space Management
  *****************************************************************************/
 
-.manageMembers ul { list-style-type: none; padding: 0; margin: 0; }
-.manageMembers button { margin-left: 0.5em; }
-.manageMembers h4 { margin-bottom: 0.5em; }
-.removeMember { margin-right: 0.5em; color: red; cursor: pointer; }
+.manage ul { list-style-type: none; padding: 0; margin: 0; }
+.manage button { margin-left: 0.5em; }
+.manage h4 { margin-bottom: 0.5em; }
+.manage .remove { margin-right: 0.5em; color: red; cursor: pointer; }
