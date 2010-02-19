@@ -26,6 +26,16 @@
 
   });
 
+  test("subscriptions", function() {
+    equals(space.getSubscriptions(), ["blog"]);
+
+    space.addSubscription("news");
+    equals(space.getSubscriptions(), ["blog", "news"]);
+
+    space.removeSubscription("news");
+    equals(space.getSubscriptions(), ["blog"]);
+  });
+
   test("public bag", function() {
     console.log(space.getPublicBag().policy);
     var expected = {
@@ -35,7 +45,7 @@
       },
       desc: ""
     };
-    ok(_.isEqual(expected, space.getPublicBag()));
+    equals(expected, space.getPublicBag());
   });
 
   test("private bag", function() {
@@ -46,7 +56,7 @@
       },
       desc: ""
     };
-    ok(_.isEqual(expected, space.getPrivateBag()));
+    equals(expected, space.getPrivateBag());
   });
 
   test("public recipe", function() {
@@ -58,7 +68,7 @@
       recipe: [["system",""], ["_public",""], ["blog_public",""], ["book_public", ""]],
       desc: ""
     };
-    ok(_.isEqual(expected, space.getPublicRecipe()));
+    equals(expected, space.getPublicRecipe());
   });
 
   test("private recipe", function() {
@@ -72,7 +82,7 @@
                 ["book_public",""], ["_private",""], ["book_private",""]],
       desc: ""
     };
-    ok(_.isEqual(expected, space.getPrivateRecipe()));
+    equals(expected, space.getPrivateRecipe());
   });
 
   test("empty space", function() {
@@ -85,7 +95,10 @@
       },
       desc: ""
     };
-    ok(_.isEqual(expected, space.getPublicBag()));
+    equals(expected, space.getPublicBag());
   });
 
-
+  equals = function(actual, expected) {
+    ok(_(actual).isEqual(expected),
+       "expected **" + expected + "**, got **" + actual + "**")
+  }

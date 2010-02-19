@@ -1,7 +1,7 @@
 function Space(name, members, subscriptions) {
 
   var name = name;
-  var subscriptions = subscriptions;
+  var subscriptions = subscriptions.sort();
   var members = members.sort();
   var space = this;
 
@@ -23,8 +23,23 @@ function Space(name, members, subscriptions) {
     members.sort();
   }
 
+  this.addSubscription = function(subscription) {
+    subscriptions = subscriptions.concat(subscription);
+    subscriptions.sort();
+  }
+
+  this.removeSubscription = function(subscription) {
+    subscriptions = _(subscriptions).without(subscription);
+    subscriptions.sort();
+  }
+
   this.getName = function(member) {
     return name;
+  }
+
+  this.getSubscriptions = function(member) {
+    return subscriptions;
+    return _(subscriptions).clone();
   }
 
   function getPolicyMembers() {
