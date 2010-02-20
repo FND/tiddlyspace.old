@@ -1,26 +1,19 @@
-#!/bin/bash
+#!/bin/bash -ex
+
+# git pull
 
 ##############################################################################
 # ensure dependencies are present
 ##############################################################################
 
-python -c 'import tiddlywebwiki'
-if [ $? != '0' ] ; then
-  echo 'need tiddlywebwiki'
-  sudo pip install -U tiddlywebwiki
-fi
-
-python -c 'import tiddlywebplugins.virtualhosting'
-if [ $? != '0' ] ; then
-  echo 'need virtualhosting'
-  sudo pip install tiddlywebplugins.virtualhosting
-fi
+#sudo pip install -U tiddlywebwiki tiddlywebplugins.devstore tiddlywebplugins.virtualhosting tiddlywebplugins.utils
 
 ##############################################################################
 # cache (some) online dependencies
 ##############################################################################
 
-./cacher
+# ./cacher
+make remotes
 
 ##############################################################################
 # make an instance dir, getting the previous one out of the way
@@ -28,9 +21,15 @@ fi
 
 instance="instance"
 if [ -d $instance ] ; then
-  mv $instance /tmp/tiddlyspace-server-$$
+  mv -f $instance /tmp/tiddlyspace-server-$$
 fi
-./tiddlyspace $instance
+# ./tiddlyspace $instance
+twinstance_dev tiddlywebplugins.tiddlyspace $instance
+
+cat >> $instance/tiddlywebconfig.py <<EOF
+from devtiddlers import update_config
+update_config(config)
+EOF
 
 ##############################################################################
 # Include dependencies. In production, we would apparently just rely
@@ -38,31 +37,20 @@ fi
 # tiddlywebconfig manually. (this is fragile!)
 ##############################################################################
 
-cd $instance
-ln -s ../tiddlywebplugins .
-ln -s ../mangler.py .
-sed -i '' "s/# A basic configuration\./import mangler/g" tiddlywebconfig.py
-
-##############################################################################
-# populate user passwords, as tiddlyweb instancer mechanism doesn't allow for it
-# (http://groups.google.com/group/tiddlyweb/browse_thread/thread/274ed6d9417740b4/83483050f8020080)
-##############################################################################
-
-osmosoft='psd ben martin jermolene fnd simon cdent rakugo mahemoff'
-for user in $osmosoft ; do
-  twanager userpass $user x
-done
-
 ##############################################################################
 # populate with sample data
 ##############################################################################
 
+cd $instance
 twanager twimport book_plugins_public http://hoster.peermore.com/recipes/TiddlyPocketBook/tiddlers.wiki
-
 twanager twimport book_public http://hoster.peermore.com/bags/TiddlyPocketBook%20-%20TiddlyWiki%20Cheatsheet/tiddlers.wiki
+
+# This is required untill tiddlywebAdaptor 1.1.1 is packaged with tiddlywebwiki
+twanager twimport system http://svn.tiddlywiki.org/Trunk/association/adaptors/TiddlyWebAdaptor.js
 
 # not exactly DRY - lots of simulating cloning here
 twanager twimport osmobook_public http://hoster.peermore.com/bags/TiddlyPocketBook%20-%20TiddlyWiki%20Cheatsheet/tiddlers.wiki
+cd -
 
 ##############################################################################
 # tell the developer what just happened

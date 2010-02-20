@@ -4,10 +4,12 @@
 .PHONY: test dist upload
 
 clean:
-	find . -name "*.pyc" |xargs rm || true
+	find . -name "*.pyc" | xargs rm || true
 	rm -r dist || true
 	rm -r build || true
 	rm -r *.egg-info || true
+	rm -rf tiddlywebplugins/tiddlyspace/resources src/homepage/*.*.tid || true
+	rm -rf tiddlywebplugins/tiddlyspace/resources || true
 
 remotes:
 	./cacher

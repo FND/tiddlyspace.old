@@ -1,0 +1,31 @@
+modifier: Paul Downey
+tags: systemConfig
+
+/***
+|''Name:''|SpacesPlugin|
+|''Description:''| TiddlyWiki Plugin for listing and accessing TiddlySpaces |
+|''Author:''|PaulDowney (psd (at) osmosoft (dot) com) |
+|''Source:''|http://whatfettle.com/2008/07/SpacesPlugin/ |
+|''CodeRepository:''|http://github.com/FND/tiddlyspace/tree/master/src/dashboard/ |
+|''Version:''|0.1|
+|''License:''|[[BSD License|http://www.opensource.org/licenses/bsd-license.php]] |
+|''Comments:''|Please make comments at http://groups.google.co.uk/group/TiddlyWikiDev |
+|''~CoreVersion:''|2.4|
+!!Documentation
+Manages TiddlySpaces of which you are a member, designed for the TiddlySpace dashboard but maybe useful elsewhere.
+
+!!Code
+***/
+//{{{
+/*jslint onevar: false nomen: false plusplus: false */
+/*global console, config, createTiddlyButton store story Story */
+(function($) {
+    version.extensions.SpacesPlugin = {installed: true};
+
+    config.macros.ListSpaces = {
+        handler: function (place, macroName, params, wikifier, paramString, tiddler) {
+        }
+    };
+
+})(jQuery);
+//}}}

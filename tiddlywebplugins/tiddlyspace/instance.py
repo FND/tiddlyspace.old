@@ -15,7 +15,7 @@ instance_config['twanager_plugins'] = ['tiddlywebplugins.tiddlyspace']
 def create_space(name, members, public_recipe_bags=[]):
 
   ###################################################################
-  # Set up stock policies
+  # Set up stock public and private policies
   ###################################################################
 
   public_policy = {
@@ -34,9 +34,13 @@ def create_space(name, members, public_recipe_bags=[]):
 
   ###################################################################
   # Set up recipes
+  # The "lambda" line performs a trivial data format transform,
+  # from array ['bag1,bag2']
+  # to array of tuples [('bag1', ''),('bag2,'')]
+  # as required for the instancer data structure.
   ###################################################################
 
-  public_recipe_bags.append("_public")
+  public_recipe_bags.extend(["system","_public"])
   public_recipe_lines = map(lambda bag: (bag, ''), public_recipe_bags)
 
   ###################################################################
@@ -65,15 +69,11 @@ def create_space(name, members, public_recipe_bags=[]):
 
   private_recipe_lines = []
   private_recipe_lines.extend(public_recipe_lines)
-  private_recipe_lines.extend(['system','_private',name+"_private"])
+  private_recipe_lines.extend([('_private',''),(name+'_private', '')])
   store_structure['recipes'][name+'_private'] = {
     'desc': 'todo',
     'policy': private_policy,
-    'recipe': [
-      ('system', ''),
-      (name+'_public', ''),
-      (name+'_private', '')
-    ]
+    'recipe': private_recipe_lines
   }
 
 #=======================================================================
@@ -95,7 +95,7 @@ store_structure['bags']['_public'] = {
   'policy': open_policy
 }
 
-store_contents['_public'] = ['src/backstageClone.recipe']
+store_contents['_public'] = ['src/split.recipe']
 
 ###################################################################
 ## set up global private bag
@@ -135,7 +135,8 @@ _osmosoft = 'psd ben martin jermolene fnd simon cdent rakugo mahemoff'.split()
 for username in _osmosoft:
   store_structure['users'][username] = {
       'note': 'Osmosoftonian',
-      'roles': ['ADMIN']
+      'roles': ['ADMIN'],
+      '_password': 'x'
   }
   create_space(username, [username], [username+'_public'])
 
