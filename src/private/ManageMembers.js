@@ -41,7 +41,7 @@
         $("<span class='remove'>X</span>").appendTo($member).click(function() {
           var unwanted = $(this).next().html();
           space.removeMember(unwanted);
-          spaceStore.put(space, function() { renderSpace(place); });
+          spaceStore.put(space, function() { renderSubscriptions(place); });
         });
         $("<span class='name'>"+member+"</span>").appendTo($member);
       });
