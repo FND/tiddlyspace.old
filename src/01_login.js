@@ -4,10 +4,6 @@
 
 config.macros.ccLogin={sha1:true, defaults: {username:null, password:null}};
 
-
-
-
-
 merge(config.macros.ccLogin,{
 	WizardTitleText:null,
 	usernameRequest:"Username",
@@ -41,29 +37,10 @@ merge(config.macros.ccLogin,{
 	registrationDisabled:"Registration Disabled"
 });
 
-
-
-
-
-
-
-	
-function isLoggedIn() {
-	if(window.loggedIn)
-	 	return true;
-	else 
-		return false;
-}
-
 config.macros.saveChanges.handler=function(place,macroName,params,wikifier,paramString,tiddler){
-	if(isLoggedIn()){
-		createTiddlyButton(place, config.macros.ccLogin.buttonLogout, config.macros.ccLogin.buttonLogoutToolTip, function(){
-				if (window.fullUrl.indexOf("?") >0)
-					window.location = window.fullUrl+"&logout=1";
-				else
-					window.location = window.fullUrl+"?logout=1";
-			return false;
-		},null,null,this.accessKey);
+	var adaptor = config.adaptors[config.defaultCustomFields['server.type']];
+	if(adaptor.checkLoginStatus()){
+		createTiddlyButton(place, config.macros.ccLogin.buttonLogout, config.macros.ccLogin.buttonLogoutToolTip, config.adaptors[config.defaultCustomFields['server.type']].prototype.logout,null,null,this.accessKey);
 	}else{
 		createTiddlyButton(place,config.macros.ccLogin.buttonlogin, config.macros.ccLogin.buttonLoginToolTip, function() {
 			story.displayTiddler(null, "Login");
@@ -82,7 +59,7 @@ config.macros.ccLogin.handler=function(place,macroName,params,wikifier,paramStri
 config.macros.ccLogin.refresh=function(place, reload, error){
 	removeChildren(place);
 	var w = new Wizard();
-	if (isLoggedIn()){
+	if (config.adaptors.tiddlyweb.checkLoginStatus()){
 		w.createWizard(place,this.stepLogoutTitle);
 		w.addStep(null, this.stepLogoutText+decodeURIComponent(cookieString(document.cookie).txtUserName)+"<br /><br />");
 		w.setButtons([
