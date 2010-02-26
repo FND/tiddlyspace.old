@@ -14,17 +14,19 @@
 
   config.macros.manageMembers = {
     handler: function(place, macroName, params, wikifier, paramString, tiddler) {
-      renderSubscriptions(place);
+      populateUsers(function() { renderSubscriptions(place); });
     }
   };
 
   function renderSubscriptions(place) {
     $members = $("<div class='manage manageMembers' />");
 
-    var $newMember = $("<input />").appendTo($members).keyup(function(ev) {
-      var key = ev.charCode || ev.keyCode || 0;
-      if (key==13) $(this).siblings("button").click(); // RETURN => click add
-    });
+    var $newMember = $("<input />")
+      .appendTo($members)
+      .keyup(function(ev) {
+        var key = ev.charCode || ev.keyCode || 0;
+        if (key==13) $(this).siblings("button").click(); // RETURN => click add
+      });
 
     $("<button>Add Member</button>").appendTo($members).click(function() {
       spaceStore.getFromCurrentURL(function(space) {
@@ -45,8 +47,30 @@
         });
         $("<span class='name'>"+member+"</span>").appendTo($member);
       });
+      var members = space.getMembers();
+      var candidates = _(allUsers).select(function(user) {
+        return (members.indexOf(user) == -1);
+      });
+      $newMember.autocomplete({list: candidates});
     });
     $(place).html($members);
+  }
+
+  var allUsers;
+  function populateUsers(callback) {
+    jQuery.ajax({
+      url: "/users",
+      type: 'GET',
+      success: function(usersText) {
+        allUsers = _($.trim(usersText).split("\n")).map(function(line) {
+          return line.split(" ")[0];
+        });
+        callback();
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        displayMessage("error loading users list");
+      }
+    });
   }
 
 })(jQuery);
