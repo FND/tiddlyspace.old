@@ -11,7 +11,7 @@ var spaceStore;
         dataType: 'json',
         success: function(recipe) {
           var space = new Space(name, recipe);
-          console.log(space.subscriptions);
+          console.log("sub", space.subscriptions);
           handler(new Space(name, recipe));
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -49,8 +49,24 @@ var spaceStore;
           }
         });
       })();
+    },
+    getAllSpaces: function(handler) {
+      jQuery.ajax({
+        url: "/bags.json",
+        contentType: 'application/json',
+        type: 'GET',
+        success:function(bagsJSON) {
+          handler(_(JSON.decode(bagsJSON)).chain()
+            .select(function(bag) { return /^.+_public$/.test(bag); })
+            .map(function(bag) { return bag.substr(0, bag.length-7); })
+            .value());
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          displayMessage("got error PUTting to " + url);
+        }
+      });
     }
-  };
+};
 
   function composePublicBagURL(space) {
     return composeURL(name(space), true, true);

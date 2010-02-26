@@ -13,9 +13,13 @@
 
 (function($) {
 
+  var allSpaces;
   config.macros.manageSubscriptions = {
     handler: function(place, macroName, params, wikifier, paramString, tiddler) {
-      renderSubscriptions(place);
+      spaceStore.getAllSpaces(function(_allSpaces) {
+        allSpaces = _allSpaces;
+        renderSubscriptions(place);
+      });
     }
   };
 
@@ -46,6 +50,10 @@
         });
         $("<span class='name'>"+subscription+"</span>").appendTo($subscription);
       });
+      var candidateSpaces = _(allSpaces).select(function(aSpace) {
+        return (space.getSubscriptions().indexOf(aSpace) == -1);
+      });
+      $newSubscription.autocomplete({list: candidateSpaces});
     });
     $(place).html($subscriptions);
   }
