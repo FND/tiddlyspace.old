@@ -6,7 +6,7 @@
 # ensure dependencies are present
 ##############################################################################
 
-#sudo pip install -U tiddlywebwiki tiddlywebplugins.devstore tiddlywebplugins.virtualhosting tiddlywebplugins.utils
+sudo pip install -U tiddlywebwiki tiddlywebplugins.devstore tiddlywebplugins.virtualhosting tiddlywebplugins.utils
 
 ##############################################################################
 # cache (some) online dependencies

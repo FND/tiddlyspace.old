@@ -1,6 +1,7 @@
 config.defaultCustomFields['server.type'] = 'tiddlyweb';
 config.macros.ccLogin.sha1 = false;
 
+
 config.adaptors.tiddlyweb.prototype.login = function(context,userParams,callback){
 	if(window.location.search.substring(1))
 		var uriParams = window.location.search.substring(1);
@@ -14,7 +15,6 @@ config.adaptors.tiddlyweb.prototype.login = function(context,userParams,callback
 };
 
 config.adaptors.tiddlyweb.loginCallback = function(status,context,responseText,uri,xhr){
-console.log('made it to here ', xhr.status);
 	if(xhr.status!=200){
 		alert('login failed!');
 		context.status = false;
@@ -24,5 +24,18 @@ console.log('made it to here ', xhr.status);
 	}
 	if(context.callback)
 		context.callback(context,context.userParams);
+};
+
+config.adaptors.tiddlyweb.prototype.logout = function(context,userParams,callback){
+	jQuery.cookie('tiddlyweb_user', null, {path:'/'});
+	config.options.txtUsername = "GUEST";	
+	window.location = window.location;
+};
+
+config.adaptors.tiddlyweb.checkLoginStatus= function() {
+	if(config.options.txtUserName === "GUEST" || config.options.txtUserName === null )
+		return false;
+	else
+		return true;
 };
 
