@@ -3,5 +3,6 @@
 import mangler
 config = {
         'system_plugins': ['tiddlywebplugins.tiddlyspace'],
+        'log_level': "DEBUG",
         'roc': 'f'
         }
