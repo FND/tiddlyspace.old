@@ -20,13 +20,10 @@ config.macros.createSpace.handler = function(place,macroName,params,wikifier,par
 }
 
 config.macros.createSpace.doCreate = function(w) {
-	var spaceName = w.getValue('cloneName').value;
-	jQuery.ajax({type:'POST', url:'/spaces', data:{'name':spaceName}, success:function(data, textStatus, XMLHttpRequest) {
-		w.addStep('created', 'created '+spaceName+config.macros.createSpace.newSpaceLink.format([data]));
-	}, error:function(response){
-		w.addStep('Error', 'There was an error creating the space '+spaceName);
-	}, complete: console.log });
-
+	var space = new Space(w.getValue('cloneName').value, [], []);
+	spaceStore.put(space, function() {
+		w.addStep('created', 'created '+space.getName())
+	});
 };
 
 config.macros.createSpace.doClone = function(w) {
