@@ -22,15 +22,14 @@ from tiddlyweb.web.http import HTTP404, HTTP415, HTTP400, HTTP409, HTTP403
 from tiddlyweb.model.user import User
 from tiddlyweb.store import NoUserError
 
-@require_any_user()
+##@require_any_user()
 def list_users(environ, start_response):
     store = environ['tiddlyweb.store']
     users = store.list_users()
     start_response('200 OK', [('Content-Type', 'text/plain')])
     return ['%s\n' % user for user in users]
 
-
-@require_any_user()
+##@require_any_user()
 def get_user(environ, start_response):
     store = environ['tiddlyweb.store']
     try:
