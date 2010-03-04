@@ -10,6 +10,7 @@ from tiddlyweb.model.recipe import Recipe
 from tiddlyweb.web.http import HTTP302, HTTP404, HTTP409, HTTP400, HTTP403
 from tiddlyweb.web.util import recipe_url, server_host_url
 from tiddlyweb.web.handler.recipe import get_tiddlers
+from tiddlyweb.web.handler.tiddler import get as get_tiddler
 from tiddlywebplugins.utils import require_any_user
 from tiddlyweb.model.policy import ForbiddenError, UserRequiredError
 from tiddlyweb.store import NoUserError, NoBagError, NoRecipeError
@@ -53,11 +54,20 @@ def intro(environ, start_response):
     """
     serves landing page generated from tiddlers in _homepage bag
     """
-    from tiddlyweb.web.handler.tiddler import get as get_tiddler
-
     environ['wsgiorg.routing_args'][1]['bag_name'] = '_homepage'
     environ['wsgiorg.routing_args'][1]['tiddler_name'] = 'index.html'
     return get_tiddler(environ, start_response)
+
+
+# XXX When auth is working correctly uncomment the following line.
+#@require_any_user()
+def dashboard(environ, start_response):
+    """
+    serves the dashboard wiki, from the dashboard recipe.
+    """
+    environ['wsgiorg.routing_args'][1]['recipe_name'] = '_dashboard'
+    environ['tiddlyweb.type'] = 'text/x-tiddlywiki'
+    return get_tiddlers(environ, start_response)
 
 
 def _determine_username_from_host(environ, http_host):

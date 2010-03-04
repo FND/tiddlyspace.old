@@ -10,7 +10,7 @@ from tiddlyweb.util import merge_config
 from tiddlywebplugins.utils import replace_handler
 
 from tiddlywebplugins.tiddlyspace.config import config as space_config
-from tiddlywebplugins.tiddlyspace.handler import home, post_space_handler
+from tiddlywebplugins.tiddlyspace.handler import home, post_space_handler, dashboard
 from tiddlywebplugins.tiddlyspace.users import (list_users, get_user,
         put_user, post_user)
 
@@ -28,6 +28,7 @@ def init(config):
 
     if 'selector' in config:
         replace_handler(config['selector'], '/', dict(GET=home))
+        config['selector'].add('/dashboard[/]', GET=dashboard)
         config['selector'].add('/spaces[/]', POST=post_space_handler)
         config['selector'].add('/users', GET=list_users, POST=post_user)
         config['selector'].add('/users/{usersign}', GET=get_user, PUT=put_user)

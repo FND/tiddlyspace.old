@@ -1,7 +1,6 @@
 config.defaultCustomFields['server.type'] = 'tiddlyweb';
 config.macros.ccLogin.sha1 = false;
 
-
 config.adaptors.tiddlyweb.prototype.login = function(context,userParams,callback){
 	if(window.location.search.substring(1))
 		var uriParams = window.location.search.substring(1);
@@ -39,7 +38,6 @@ config.adaptors.tiddlyweb.checkLoginStatus= function() {
 		return true;
 };
 
-
 config.adaptors.tiddlyweb.doRegister = function(context) {
 	var uriTemplate = '%0users';
 	var uri = uriTemplate.format([config.defaultCustomFields['server.host']]);
@@ -48,18 +46,21 @@ config.adaptors.tiddlyweb.doRegister = function(context) {
 
 config.adaptors.tiddlyweb.registerCallback = function(username) {
 	console.log('done register stuff');
-	// do http stuff
 }
 
-
-
-config.adaptors.tiddlyweb.isUsernameAvaliable = function(username) {
-	var req = httpReq("GET", "/users/"+username, config.adaptors.tiddlyweb.isUsernameAvaliableCallback); 
+config.adaptors.tiddlyweb.isUsernameAvaliable = function(context,userParams,callback) {
+	context.callback = callback;
+	context.userParams = userParams;
+	var req = httpReq("GET", "/users/"+context.username, config.adaptors.tiddlyweb.isUsernameAvaliableCallback, context); 
 }
 
 config.adaptors.tiddlyweb.isUsernameAvaliableCallback = function(status,context,responseText,uri,xhr) {
-	if(xhr.status===200)
-		return true
-	else
-		return false;	
+	if(xhr.status===200){
+		context.status = true;	
+	}else{
+		context.status = false;	
+	}
+	if(context.callback){
+		context.callback(status, context, context.userParams);
+	}
 }

@@ -132,6 +132,32 @@ store_structure['bags']['_private'] = {
 }
 
 ###################################################################
+## set up dashboard recipe etc
+###################################################################
+store_structure['bags']['_dashboard'] = {
+  'desc': 'TiddlySpace dashboard bag',
+  'policy': {
+    'read': [],
+    'write': ['R:ADMIN'],
+    'create': ['R:ADMIN'],
+    'delete': ['R:ADMIN'],
+    'manage': ['R:ADMIN'],
+    'accept': ['R:ADMIN'],
+    'owner': 'administrator'
+  }
+}
+store_structure['recipes']['_dashboard'] = {
+        'desc': 'TiddlySpace dashboard recipe',
+        'policy': {
+            'read': [],
+            'manage': ['R:ADMIN'],
+            'owner': 'administrator',},
+        'recipe': [
+            ('_dashboard', ''),],
+        }
+store_contents['_dashboard'] = ['src/dashboard/split.recipe']
+
+###################################################################
 ## set up homepage bag
 ###################################################################
 
