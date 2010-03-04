@@ -84,7 +84,11 @@ config.macros.register.doRegister=function(place, w){
 	params.u = w.formElem['reg_username'].value;
 	params.place = place;
 	params.w = w;
-	config.adaptors[config.defaultCustomFields['server.type']].doRegister(w.formElem['reg_username'].value, w.formElem['reg_password1'].value, w.formElem['reg_mail'].value);
+	context = {};
+	context.username = w.formElem['reg_username'].value;
+	context.password = w.formElem['reg_password1'].value;
+	context.mail = w.formElem['reg_mail'].value; 
+	config.adaptors[config.defaultCustomFields['server.type']].doRegister(context);
 	
 	//var loginResp=doHttp('POST',url+'/handle/register.php',"username="+w.formElem['reg_username'].value+"&reg_mail="+w.formElem['reg_mail'].value+"&password="+Crypto.hexSha1Str(w.formElem['reg_password1'].value)+"&password2="+Crypto.hexSha1Str(w.formElem['reg_password2'].value),null,null,null,config.macros.register.registerCallback,params);
 	w.addStep(me.step2Title, me.msgCreatingAccount);
