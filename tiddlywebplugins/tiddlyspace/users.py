@@ -15,9 +15,10 @@ a user with the ADMIN will need to exist in the store.
 """
 
 import simplejson
+import urllib
 
 from tiddlywebplugins.utils import require_any_user, require_role
-from tiddlyweb.web.http import HTTP404, HTTP415, HTTP400, HTTP409
+from tiddlyweb.web.http import HTTP404, HTTP415, HTTP400, HTTP409, HTTP403
 from tiddlyweb.model.user import User
 from tiddlyweb.store import NoUserError
 
@@ -42,7 +43,50 @@ def get_user(environ, start_response):
     return ['%s' % user]
 
 def put_user(environ, start_response):
-    pass
+    """
+    Allow a user or an admin to set the password for a user
+    at /users/{usersign}.
+    """
+    store = environ['tiddlyweb.store']
+    current_user = environ['tiddlyweb.usersign']
+    target_user = environ['wsgiorg.routing_args'][1]['usersign']
+    target_user = urllib.unquote(target_user)
+    target_user = unicode(target_user, 'utf-8')
+
+    if not ('ADMIN' in current_user['roles'] or
+            current_user['name'] == target_user):
+        raise HTTP403('Incorrect User')
+
+    content_type = environ['tiddlyweb.type']
+    length = environ['CONTENT_LENGTH']
+    if content_type != 'application/json':
+        raise HTTP415('application/json required')
+    content = environ['wsgi.input'].read(int(length))
+
+    try:
+        user_info = simplejson.loads(content)
+    except ValueError, exc:
+        raise HTTP400('Invalid JSON, %s' % exc)
+
+    try:
+        user = User(target_user)
+        try:
+            store.get(user)
+        except NoUserError:
+            raise HTTP404()
+        user.set_password(user_info['password'])
+    except KeyError, exc:
+        raise HTTP400('Missing required data: %s', exc)
+
+    store.put(user)
+    start_response('204 No Content', [
+        ('Content-Type', 'text/html; charset=UTF-8')
+        ])
+    return ["Updated %s" % target_user]
+
+
+
+
 
 @require_role('ADMIN')
 def post_user(environ, start_response):
@@ -78,4 +122,4 @@ def post_user(environ, start_response):
     start_response('201 Create', [
         ('Content-Type', 'text/html; charset=UTF-8')
         ])
-    return "Created %s" % user_info['username']
+    return ["Created %s" % user_info['username']]
