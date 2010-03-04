@@ -40,9 +40,18 @@ config.adaptors.tiddlyweb.checkLoginStatus= function() {
 };
 
 
-config.adaptors.tiddlyweb.doRegister = function(username, email, password) {
-	// do http stuff
+config.adaptors.tiddlyweb.doRegister = function(context) {
 	console.log('doing register stuff', arguments);
+
+	var uriTemplate = '%0users';
+	var uri = uriTemplate.format([config.defaultCustomFields['server.host']]);
+
+	console.log(uri);
+	context = {};
+	var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback,
+	context, null, {"username":context.username,"password":context.password}, 'application/json', null, null, true);
+
+
 	config.adaptors.tiddlyweb.registerCallback(username);	
 }
 
