@@ -43,7 +43,7 @@ config.adaptors.tiddlyweb.checkLoginStatus= function() {
 config.adaptors.tiddlyweb.doRegister = function(username, email, password) {
 	// do http stuff
 	console.log('doing register stuff', arguments);
-	config.adaptors.tiddlyweb.registerCallback(true);	
+	config.adaptors.tiddlyweb.registerCallback(username);	
 }
 
 config.adaptors.tiddlyweb.registerCallback = function(username) {
