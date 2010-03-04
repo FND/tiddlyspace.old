@@ -20,6 +20,7 @@ config.macros.createSpace.handler = function(place,macroName,params,wikifier,par
 }
 
 config.macros.createSpace.doCreate = function(w) {
+  // using space abstraction
 	var space = new Space(w.getValue('cloneName').value, [], []);
 	spaceStore.put(space, function() {
 		w.addStep('created', 'created '+space.getName())
