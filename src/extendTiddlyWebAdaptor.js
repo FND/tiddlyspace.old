@@ -53,13 +53,21 @@ config.adaptors.tiddlyweb.registerCallback = function(username) {
 
 
 
-config.adaptors.tiddlyweb.isUsernameAvaliable = function(username) {
-	var req = httpReq("GET", "/users/"+username, config.adaptors.tiddlyweb.isUsernameAvaliableCallback); 
+config.adaptors.tiddlyweb.isUsernameAvaliable = function(context,userParams,callback) {
+console.log('callback sis ', callback);
+	context.callback = callback;
+	context.userParams = userParams;
+	var req = httpReq("GET", "/users/"+context.username, config.adaptors.tiddlyweb.isUsernameAvaliableCallback, context); 
 }
 
 config.adaptors.tiddlyweb.isUsernameAvaliableCallback = function(status,context,responseText,uri,xhr) {
-	if(xhr.status===200)
-		return true
-	else
-		return false;	
+
+	if(xhr.status===200){
+		context.status = true;	
+	}else{
+		context.status = false;	
+	}
+	if(context.callback){
+		context.callback(status, context, context.userParams);
+	}
 }

@@ -36,7 +36,10 @@ config.macros.register.displayRegister=function(place, w){
 	var me = config.macros.register;
 	w.addStep(me.stepRegisterIntroText, me.stepRegisterHtml);
 	w.formElem["reg_username"].onkeyup=function() {
-		config.adaptors[config.defaultCustomFields['server.type']].isUsernameAvaliable();
+		var context = {};
+		context.username = w.formElem["reg_username"].value;
+		context.w = w;
+		config.adaptors[config.defaultCustomFields['server.type']].isUsernameAvaliable(context, null,config.macros.register.isUsernameAvailabeCallback);
 	};
 	w.setButtons([
 		{caption: me.buttonRegister, tooltip: me.buttonRegisterToolTip, onClick:function() { me.doRegister(place, w)}},
@@ -90,6 +93,7 @@ config.macros.register.doRegister=function(place, w){
 	context.mail = w.formElem['reg_mail'].value; 
 	config.adaptors[config.defaultCustomFields['server.type']].doRegister(context);
 	
+	//var loginResp=doHttp('POST',url+'/handle/register.php',"username="+w.formElem['reg_username'].value+"&reg_mail="+w.formElem['reg_mail'].value+"&password="+Crypto.hexSha1Str(w.formElem['reg_password1'].value)+"&password2="+Crypto.hexSha1Str(w.formElem['reg_password2'].value),null,null,null,config.macros.register.registerCallback,params);
 	w.addStep(me.step2Title, me.msgCreatingAccount);
 	w.setButtons([
 		{caption: me.buttonCancel, tooltip: me.buttonCancelToolTip, onClick: function() {config.macros.ccLogin.refresh(place);}
@@ -125,6 +129,14 @@ config.macros.register.registerCallback=function(status,params,responseText,uri,
 	adaptor.login(context,userParams,config.macros.ccLogin.loginCallback);
 	return true;
 }
+
+config.macros.register.isUsernameAvailabeCallback=function(status,params,responseText,uri,xhr){
+	
+console.log('herehehre', status, params);
+var me = config.macros.register;
+	var resp = (params.status == true) ? me.msgUsernameTaken : me.msgUsernameAvailable;
+	config.macros.register.setStatus(params.w, "username_error", resp);
+};
 
 //}}}
 
