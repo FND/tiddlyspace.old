@@ -80,6 +80,31 @@ def create_space(name, members, public_recipe_bags=[]):
 # main
 #=======================================================================
 
+# _challenger structures
+# Using a recipe as it leave room for adding in a style
+# bag later
+store_structure['recipes']['_challenger'] = {
+        'desc': 'challenger interface',
+        'policy': {
+            'read': [],
+            'manage': ['R:ADMIN'],
+            'owner': 'administrator',},
+        'recipe': [
+            ('_challenger', ''),],
+        }
+store_structure['bags']['_challenger'] = {
+        'desc': 'challenger interface tiddlers',
+        'policy': {
+            'read': [],
+            'write': ['R:ADMIN'],
+            'create': ['R:ADMIN'],
+            'delete': ['R:ADMIN'],
+            'manage': ['R:ADMIN'],
+            'owner': 'administrator',
+            }
+        }
+
+
 ###################################################################
 ## define policy const
 ###################################################################
