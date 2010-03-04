@@ -17,7 +17,7 @@ remotes:
 test: remotes
 	py.test -x test
 
-dist: test
+dist: clean remotes test
 	python setup.py sdist
 
 release: clean pypi
