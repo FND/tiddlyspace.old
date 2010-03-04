@@ -88,7 +88,7 @@ def put_user(environ, start_response):
 
 
 
-@require_role('ADMIN')
+#@require_role('ADMIN')
 def post_user(environ, start_response):
     """
     Create a new user through a JSON POST to /users.
