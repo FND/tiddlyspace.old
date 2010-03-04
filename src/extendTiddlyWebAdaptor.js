@@ -47,12 +47,18 @@ config.adaptors.tiddlyweb.doRegister = function(context) {
 	var uri = uriTemplate.format([config.defaultCustomFields['server.host']]);
 
 	console.log(uri);
-	context = {};
-	var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback,
-	context, null, {"username":context.username,"password":context.password}, 'application/json', null, null, true);
+
+var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback, null, null, '{"username":"'+context.username+'","password":"'+context.password+'"}', 'application/json', null, null, true); 
 
 
-	config.adaptors.tiddlyweb.registerCallback(username);	
+
+//	var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback,
+///	context, null, {"username":context.username,"password":context.password}, 'application/json', null, null, true);
+
+//var req = httpReq("POST", 'http://0.0.0.0:8080/users', config.adaptors.tiddlyweb.registerCallback, null, null, '{"username":"s","password":"p"}', 'application/json', null, null, true); 
+
+
+//	config.adaptors.tiddlyweb.registerCallback(username);	
 }
 
 config.adaptors.tiddlyweb.registerCallback = function(username) {
