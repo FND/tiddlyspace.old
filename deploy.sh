@@ -10,6 +10,10 @@ fi
 git pull && \
 make dist && \
 scp dist/*tiddlyspace*tar.gz "$host:~/tmp/" && \
-ssh $host "cd ~/tmp && " \
-	"sudo pip install $pip_options -U *tiddlyspace*tar.gz && " \
-	"cd $instance_dir && sudo twanager update && sudo apache2ctl restart"
+ssh $host "cd ~/tmp &&
+	echo 'installing' &&
+	sudo pip install $pip_options -U *tiddlyspace*tar.gz &&
+	echo 'updating' &&
+	cd $instance_dir && sudo twanager update &&
+	echo 'restarting' &&
+	sudo apache2ctl restart"
