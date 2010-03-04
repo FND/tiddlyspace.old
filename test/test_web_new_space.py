@@ -45,8 +45,8 @@ def test_post():
     except httplib2.RedirectLimit, e:
         pass
 
-    assert e.response['status'] == '303'
-    assert e.response['location'] == 'http://our_test_domain:8001/recipes/wow_public/tiddlers.wiki'
+    assert response['status'] == '201'
+    assert response['location'] == 'http://our_test_domain:8001/recipes/wow_public/tiddlers.wiki'
 
 
 def make_user(username, password):
