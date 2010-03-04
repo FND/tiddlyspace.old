@@ -1,8 +1,0 @@
-config.backstageTasks.push("about");
-merge(config.tasks,{about:{text: 'clone',tooltip: 'click to clone',content: '<<tiddler cloneSpace>>'}});
-
-
-
-config.backstageTasks.push("status");
-merge(config.tasks,{about:{text: 'status',tooltip: 'check your login status',content: '<<tiddler ccLogin>>'}});
-
