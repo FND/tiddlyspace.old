@@ -14,6 +14,7 @@ PACKAGE_NAME = 'tiddlywebplugins.tiddlyspace'
 
 
 config['instance_tiddlers'] = get_tiddler_locations(store_contents, PACKAGE_NAME)
+config['auth_systems'] = ['tiddlywebplugins.tiddlyspace.challenger']
 
 config['space'] = { # XXX: WTF?
     'bags': {

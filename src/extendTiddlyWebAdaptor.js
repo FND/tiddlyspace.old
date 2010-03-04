@@ -41,42 +41,24 @@ config.adaptors.tiddlyweb.checkLoginStatus= function() {
 
 
 config.adaptors.tiddlyweb.doRegister = function(context) {
-	console.log('doing register stuff', arguments);
-
 	var uriTemplate = '%0users';
 	var uri = uriTemplate.format([config.defaultCustomFields['server.host']]);
-
-	console.log(uri);
-
-var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback, null, null, '{"username":"'+context.username+'","password":"'+context.password+'"}', 'application/json', null, null, true); 
-
-
-
-//	var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback,
-///	context, null, {"username":context.username,"password":context.password}, 'application/json', null, null, true);
-
-//var req = httpReq("POST", 'http://0.0.0.0:8080/users', config.adaptors.tiddlyweb.registerCallback, null, null, '{"username":"s","password":"p"}', 'application/json', null, null, true); 
-
-
-//	config.adaptors.tiddlyweb.registerCallback(username);	
+	var req = httpReq("POST", uri, config.adaptors.tiddlyweb.registerCallback, null, null, '{"username":"'+context.username+'","password":"'+context.password+'"}', 'application/json', null, null, true); 
 }
 
 config.adaptors.tiddlyweb.registerCallback = function(username) {
 	console.log('done register stuff');
-
 	// do http stuff
 }
 
 
 
 config.adaptors.tiddlyweb.isUsernameAvaliable = function(username) {
-	// do http stuff
-	config.adaptors.tiddlyweb.isUsernameAvaliableCallback(true);	
+	var req = httpReq("GET", "/users/"+username, config.adaptors.tiddlyweb.isUsernameAvaliableCallback); 
 }
 
-
-config.adaptors.tiddlyweb.isUsernameAvaliableCallback = function(status) {
-	if(status===true)
+config.adaptors.tiddlyweb.isUsernameAvaliableCallback = function(status,context,responseText,uri,xhr) {
+	if(xhr.status===200)
 		return true
 	else
 		return false;	
