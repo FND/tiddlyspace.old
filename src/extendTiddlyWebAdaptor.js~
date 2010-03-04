@@ -61,6 +61,7 @@ config.adaptors.tiddlyweb.isUsernameAvaliable = function(username) {
 
 
 config.adaptors.tiddlyweb.isUsernameAvaliableCallback = function(status) {
+console.log('callback21');
 	if(status===true)
 		return true
 	else

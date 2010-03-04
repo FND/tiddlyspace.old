@@ -4,6 +4,10 @@
 
 config.macros.ccLogin={sha1:true, defaults: {username:null, password:null}};
 
+
+
+
+
 merge(config.macros.ccLogin,{
 	WizardTitleText:null,
 	usernameRequest:"Username",
@@ -34,14 +38,32 @@ merge(config.macros.ccLogin,{
 	configUsernameInputName:"cctuser",
 	configPasswordInputName:"cctpass",
 	configPasswordCookieName:"cctPass", 
-	registrationDisabled:"Registration Disabled",
-	canCreateAccount:true
+	registrationDisabled:"Registration Disabled"
 });
 
+
+
+
+
+
+
+	
+function isLoggedIn() {
+	if(window.loggedIn)
+	 	return true;
+	else 
+		return false;
+}
+
 config.macros.saveChanges.handler=function(place,macroName,params,wikifier,paramString,tiddler){
-	var adaptor = config.adaptors[config.defaultCustomFields['server.type']];
-	if(adaptor.checkLoginStatus()){
-		createTiddlyButton(place, config.macros.ccLogin.buttonLogout, config.macros.ccLogin.buttonLogoutToolTip, config.adaptors[config.defaultCustomFields['server.type']].prototype.logout,null,null,this.accessKey);
+	if(isLoggedIn()){
+		createTiddlyButton(place, config.macros.ccLogin.buttonLogout, config.macros.ccLogin.buttonLogoutToolTip, function(){
+				if (window.fullUrl.indexOf("?") >0)
+					window.location = window.fullUrl+"&logout=1";
+				else
+					window.location = window.fullUrl+"?logout=1";
+			return false;
+		},null,null,this.accessKey);
 	}else{
 		createTiddlyButton(place,config.macros.ccLogin.buttonlogin, config.macros.ccLogin.buttonLoginToolTip, function() {
 			story.displayTiddler(null, "Login");
@@ -60,7 +82,7 @@ config.macros.ccLogin.handler=function(place,macroName,params,wikifier,paramStri
 config.macros.ccLogin.refresh=function(place, reload, error){
 	removeChildren(place);
 	var w = new Wizard();
-	if (config.adaptors.tiddlyweb.checkLoginStatus()){
+	if (isLoggedIn()){
 		w.createWizard(place,this.stepLogoutTitle);
 		w.addStep(null, this.stepLogoutText+decodeURIComponent(cookieString(document.cookie).txtUserName)+"<br /><br />");
 		w.setButtons([
@@ -123,7 +145,7 @@ config.macros.ccLogin.refresh=function(place, reload, error){
 		config.macros.ccLogin.doLogin(w.formElem["username"].value, w.formElem["password"].value, this, place);
 	},null, null, null,  {tabindex:'3'});
 
-	if(config.macros.register!==undefined && config.macros.ccLogin.canCreateAccount == true){		
+	if(config.macros.register!==undefined && serverside.can_create_account == 1 && window.displayRegisterOnLogin == 1){		
 		var li_register = createTiddlyElement(w.footElem, "li");
 		createTiddlyButton(li_register,config.macros.register.buttonRegister,config.macros.register.buttonRegisterToolTip,function() {
 				config.macros.register.displayRegister(place, w, this);

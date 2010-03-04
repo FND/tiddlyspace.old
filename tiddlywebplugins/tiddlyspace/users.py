@@ -43,4 +43,6 @@ def get_user(environ, start_response):
 @require_role('ADMIN')
 def put_user(environ, start_response):
     store = environ['tiddlyweb.store']
+    usersign = environ['wsgiorg.routing_args'][1]['usersign']
+	
     pass
