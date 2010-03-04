@@ -36,7 +36,8 @@ def setup_module(module):
     admin.add_role('ADMIN')
     admin.set_password('spank')
     module.store.put(admin)
-    module.authorization = b64encode('admin:spank')
+    module.admin_authorization = b64encode('admin:spank')
+    module.user_authorization = b64encode('cdent:pigdog')
 
 
 def test_post_new_user():
@@ -53,7 +54,7 @@ def test_post_new_user():
     response, content = http.request('http://our_test_domain:8001/users',
             method='POST',
             headers={'Content-Type': 'application/json',
-                'Authorization': 'Basic %s' % authorization},
+                'Authorization': 'Basic %s' % admin_authorization},
             body='{"username":"cdent","password":"pigdog"}')
 
     assert response['status'] == '201'
@@ -66,7 +67,43 @@ def test_post_new_user():
     response, content = http.request('http://our_test_domain:8001/users',
             method='POST',
             headers={'Content-Type': 'application/json',
-                'Authorization': 'Basic %s' % authorization},
+                'Authorization': 'Basic %s' % admin_authorization},
             body='{"username":"cdent","password":"pigdog"}')
     assert response['status'] == '409'
     assert 'User exists' in content
+
+
+def test_put_password():
+    http = httplib2.Http()
+
+    response, content = http.request('http://our_test_domain:8001/users/cdent',
+            method='PUT',
+            headers={'Content-Type': 'application/json'},
+            body='{"password":"pigcat"}')
+
+    assert response['status'] == '403'
+
+    response, content = http.request('http://our_test_domain:8001/users/cdent',
+            method='PUT',
+            headers={'Content-Type': 'application/json',
+                'Authorization': 'Basic %s' % user_authorization},
+            body='{"password":"pigcat"}')
+
+    assert response['status'] == '204'
+    
+    user = User('cdent')
+    user = store.get(user)
+    assert user.check_password('pigcat') is True
+    assert user.check_password('pigdog') is False
+
+    response, content = http.request('http://our_test_domain:8001/users/cdent',
+            method='PUT',
+            headers={'Content-Type': 'application/json',
+                'Authorization': 'Basic %s' % admin_authorization},
+            body='{"password":"pigcow"}')
+    assert response['status'] == '204'
+    
+    user = User('cdent')
+    user = store.get(user)
+    assert user.check_password('pigcow') is True
+    assert user.check_password('pigcat') is False
