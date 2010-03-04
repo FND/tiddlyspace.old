@@ -2,6 +2,7 @@ TiddlySpace
 TiddlyWeb-based multi-user TiddlyWiki hosting
 
 website: http://tiddlyspace.com
+beta version: http://tiddlyspace.labs.osmosoft.com
 repository: http://github.com/FND/tiddlyspace
 
-Run "build.sh" for a complete build from scratch
+Run "dev.sh" for a complete build from scratch
