@@ -4,7 +4,7 @@ html, body, #container {
     margin: 0;
     color: #111;
     font-family: helvetica, sans-serif;
-    background-color: #D2F7D3;
+    background-color: #A2F7A2;
 }
 
 body > #container { 
@@ -68,11 +68,13 @@ body > #container {
     height: 4em;
     min-height: 5em;
     text-align: center;
-    background-color: #D2F7D3;
+    background-color: #A2F7A2;
     border-top: 0.1em solid #85AB87;
     padding-top: 1em;
     margin-top: -5.1em;
     z-index: 100;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E2FFE2), to(#A2F7A2));
+    background: -moz-linear-gradient(0% 100% 90deg, #A2F7A2, #E2FFE2);
 }
 
 #footer * {
@@ -102,6 +104,17 @@ body > #container {
     top: -2.75em;
 }
 
+a,
+a:active,
+a:visited {
+    color: #003355;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #3399AA;
+    text-decoration: underline;
+}
 
 /*
  *  bubbles
