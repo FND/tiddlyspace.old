@@ -2,7 +2,7 @@ html, body, #container {
     height: 100%; 
     padding: 0;
     margin: 0;
-    color: #000;
+    color: #111;
     font-family: helvetica, sans-serif;
     background-color: #D2F7D3;
 }
@@ -87,7 +87,6 @@ body > #container {
     line-height: 3em;
     font-size: 3em;
     font-weight: bold;
-    text-shadow: rgb(255, 255, 255) 2px 2px 2px;
 }
 
 .siteSubtitle {
@@ -100,24 +99,9 @@ body > #container {
 
 .login {
     position: relative;
-    top: -2.7em;
+    top: -2.75em;
 }
 
-a,
-a:active, 
-a:visited {
-    color: #000;
-    text-decoration: none;
-}
-
-.login a,
-.login a:active, 
-.login a:visited,
-a:hover {
-    color: #008;
-    text-decoration: underline;
-    font-weight: bold;
-}
 
 /*
  *  bubbles
