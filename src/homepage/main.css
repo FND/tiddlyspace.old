@@ -58,6 +58,7 @@ body > #container {
     clear: both;
     position: relative;
     width: 100%;
+    height: 4em;
     min-height: 5em;
     text-align: center;
     background-color: #D2F7D3;
