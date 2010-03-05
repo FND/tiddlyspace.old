@@ -1,21 +1,15 @@
-* {
-	margin: 0;
-	padding: 0;
-}
-
-html, 
-body, 
-#container {
+html, body, #container { 
+    height: 100%; 
+    padding: 0;
+    margin: 0;
     background: #fff;
     color: #000;
     font-family: helvetica, sans-serif;
-    height: 100%;
 }
 
 body > #container { 
     height: auto; 
-    min-height: 100%;
-    padding-bottom: 5em;
+    min-height: 100%; 
 }
 
 #header {
@@ -28,25 +22,22 @@ body > #container {
     border-bottom: 4px solid #86B2CC;
 }
 
-.siteTitle {
-    line-height: 2.5em;
-    font-size: 3em;
-    font-weight: bold;
-}
-
-.siteSubtitle {
-    font-style: italic;
-    display: block;
-    margin: 2em auto;
-}
 
 #content {
+    padding: 5em 10em 7em;
+    min-width: 20em;
+}
+
+#about {
+    font-size: 1.2em;
     background-color: #FFCAE9;
     border: 4px solid #E48CBF;
-    margin: 2em auto;
-    width: 20em;
-    padding: 2em 2em 4em 2em;
+    margin: 0 auto;
+    padding: 1em 0 2em 0;
+    width: 70%;
+    text-align: center;
 }
+
 
 #footer {
     clear: both;
@@ -55,9 +46,43 @@ body > #container {
     height: 4em;
     text-align: center;
     background-color: #D2F7D3;
-    border-top: 4px solid #85AB87;
-    padding: 0;
+    border-top: 0.1em solid #85AB87;
     padding-top: 1em;
+    margin-top: -5.1em;
+}
+
+#footer * {
     margin: 0;
-    margin-top: -4em;
+    padding: 0;
+}
+
+.siteTitle {
+    line-height: 2.5em;
+    font-size: 3em;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: rgb(255, 255, 255) 2px 2px 2px;
+}
+
+.siteSubtitle {
+    font-style: italic;
+    display: block;
+    margin: 2em auto;
+}
+
+a,
+a:active, 
+a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+.login a,
+.login a:active, 
+.login a:visited,
+a:hover {
+    text-decoration: underline;
+    color: #008;
+    text-decoration: underline;
 }
