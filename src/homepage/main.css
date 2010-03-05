@@ -3,7 +3,7 @@ html, body, #container {
     padding: 0;
     margin: 0;
     color: #111;
-    font-family: helvetica, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #A2F7A2;
 }
 
@@ -37,27 +37,6 @@ body > #container {
 #about .private {
     width: 14em;
     padding: 1em 2em 2em;
-}
-
-.public {
-    position: relative;
-    border: 2px solid red;
-    background-color: #C7EAFF;
-    border: 4px solid #86B2CC;
-    -webkit-border-radius: 20em;
-    -moz-border-radius: 20em;
-    border-radius: 20em;
-}
-
-.private {
-    background-color: #FFCAE9;
-    border: 4px solid #E48CBF;
-    margin: 0 auto;
-    padding: 1em;
-    text-align: center;
-    -webkit-border-radius: 20em;
-    -moz-border-radius: 20em;
-    border-radius: 20em;
 }
 
 #footer {
@@ -119,6 +98,27 @@ a:hover {
 /*
  *  bubbles
  */
+.public {
+    position: relative;
+    border: 2px solid red;
+    background-color: #C7EAFF;
+    border: 4px solid #86B2CC;
+    -webkit-border-radius: 20em;
+    -moz-border-radius: 20em;
+    border-radius: 20em;
+}
+
+.private {
+    background-color: #FFCAE9;
+    border: 4px solid #E48CBF;
+    margin: 0 auto;
+    padding: 1em;
+    text-align: center;
+    -webkit-border-radius: 20em;
+    -moz-border-radius: 20em;
+    border-radius: 20em;
+}
+
 .bubble {
     position: absolute;
     z-index: 10;   
