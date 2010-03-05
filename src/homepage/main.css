@@ -2,9 +2,9 @@ html, body, #container {
     height: 100%; 
     padding: 0;
     margin: 0;
-    background: #fff;
     color: #000;
     font-family: helvetica, sans-serif;
+    background-color: #D2F7D3;
 }
 
 body > #container { 
@@ -12,38 +12,53 @@ body > #container {
     min-height: 100%; 
 }
 
+#container {
+    background-color: #fff;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C7EAFF), to(#FFFFFF));
+    background: -moz-linear-gradient(0% 100% 90deg, #C7EAFF, #FFFFFF);
+}
+
 #header {
     background-color: #C7EAFF;
     width: 100%;
     height: 8em;
     text-align: center;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#EEF5FC), to(#C7EAFF), color-stop(.6,#d1f0ff));
-    background: -moz-linear-gradient(19% 75% 90deg,#d1f0ff, #eef5fc, #c7eaff 100%);
     border-bottom: 4px solid #86B2CC;
 }
 
-
-#content {
-    padding: 5em 10em 7em;
-    min-width: 20em;
+#about.public {
+    position: relative;
+    border: 2px solid red;
+    background-color: #C7EAFF;
+    border: 4px solid #86B2CC;
+    -webkit-border-radius: 20em;
+    -moz-border-radius: 20em;
+    border-radius: 20em;
+    padding: 10em;
+    margin: -5em auto 0 auto;
+    width: 19.5em;
 }
 
-#about {
-    font-size: 1.2em;
+.private {
+    ont-size: 1.2em;
     background-color: #FFCAE9;
     border: 4px solid #E48CBF;
     margin: 0 auto;
-    padding: 1em 0 2em 0;
-    width: 70%;
+    padding: 1em 2em 2em;
+    width: 14em;
     text-align: center;
+    -webkit-border-radius: 20em;
+    -moz-border-radius: 20em;
+    border-radius: 20em;
 }
 
 
 #footer {
+    color: #000;
     clear: both;
     position: relative;
     width: 100%;
-    height: 4em;
+    min-height: 5em;
     text-align: center;
     background-color: #D2F7D3;
     border-top: 0.1em solid #85AB87;
@@ -57,18 +72,26 @@ body > #container {
 }
 
 .siteTitle {
-    line-height: 2.5em;
+    position: relative;
+    top: -2.7em;
+    left: -0.5em;
+    line-height: 3em;
     font-size: 3em;
-    font-family: Georgia, serif;
     font-weight: bold;
-    font-style: italic;
     text-shadow: rgb(255, 255, 255) 2px 2px 2px;
 }
 
 .siteSubtitle {
-    font-style: italic;
+    position: relative;
+    top: -3.5em;
+    font-size: 1.3em;
     display: block;
-    margin: 2em auto;
+    margin: 0 auto;
+}
+
+.login {
+    position: relative;
+    top: -2.7em;
 }
 
 a,
