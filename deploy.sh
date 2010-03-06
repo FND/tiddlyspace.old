@@ -1,14 +1,15 @@
 #!/usr/bin/env sh
 
 # Usage:
-#   $ ./deploy.sh [quick]
-
-host="tiddlyspace.labs.osmosoft.com"
-instance_dir="/data/vhost/tiddlyspace.labs.osmosoft.com/tiddlyweb"
+#   $ ./deploy.sh [quick] [logname]
 
 if [ "$1" = "quick" ]; then
 	pip_options="--no-dependencies"
+    shift
 fi
+
+host="${1}tiddlyspace.labs.osmosoft.com"
+instance_dir="/data/vhost/tiddlyspace.labs.osmosoft.com/tiddlyweb"
 
 git pull && \
 make dist && \
