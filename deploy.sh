@@ -5,7 +5,7 @@
 
 if [ "$1" = "quick" ]; then
 	pip_options="--no-dependencies"
-    shift
+	shift
 fi
 
 host="${1}tiddlyspace.labs.osmosoft.com"
