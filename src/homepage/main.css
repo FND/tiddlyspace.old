@@ -124,6 +124,13 @@ a:hover {
     position: absolute;
     z-index: 10;   
     padding: 3em;
+    -webkit-transition: -webkit-transform 1.0s ease-in-out;
+}
+
+.bubble:hover {
+    -webkit-transform: rotate(0deg) scale(2.0);
+    -moz-transform: rotate(0deg) scale(2.0);
+    transform: rotate(0deg) scale(2.0);
 }
 
 .bubble .private {
